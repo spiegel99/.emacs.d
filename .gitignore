@@ -1,0 +1,20 @@
+# Emacs auto-save files
+auto-save-list/
+
+# Native compilation cache (Emacs 28+)
+eln-cache/
+
+# Installed packages
+elpa/
+
+# Byte-compiled files
+*.elc
+
+# Undo tree history files
+*.~undo-tree~
+
+# Backup files
+*~
+
+# Lock files
+.#*
