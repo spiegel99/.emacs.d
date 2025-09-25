@@ -3,7 +3,7 @@ auto-save-list/
 
 # Native compilation cache (Emacs 28+)
 eln-cache/
-
+eshell/
 # Installed packages
 elpa/
 

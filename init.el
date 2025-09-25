@@ -89,7 +89,7 @@
   (which-key-mode)
   (setq which-key-idle-delay 1))
 
-;; install fonts, all-the-icons-install-fonts, see doc
+;; install fonts, run all-the-icons-install-fonts just after, see doc
 (use-package all-the-icons
   :if (display-graphic-p)
   :ensure t)
