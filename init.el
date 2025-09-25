@@ -93,9 +93,12 @@
 (use-package all-the-icons
   :if (display-graphic-p)
   :ensure t)
+
+(use-package all-the-icons
+  :if (display-graphic-p)
+  :ensure t)
+
 (use-package all-the-icons-dired
   :ensure t
-  :init (add-hook 'dired-mode-hook 'all-the-icons-dired-mode))
-
-;; hide in dired the details
-(add-hook 'dired-mode-hook #'dired-hide-details-mode)
+  :hook ((dired-mode . all-the-icons-dired-mode)
+         (dired-mode . dired-hide-details-mode)))
