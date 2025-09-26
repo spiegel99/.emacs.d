@@ -14,7 +14,8 @@
 (setq visible-bell t)
 
 (set-frame-font "Iosevka Term 17" nil t)
-(load-theme 'modus-vivendi)
+;; installed package jbeans-theme
+(load-theme 'jbeans t)
 
 ;send auto-save files to another directory
 (setq backup-directory-alist '(("." . "~/backup")))
@@ -38,8 +39,6 @@
 
 (require 'use-package)
 (setq use-package-always-ensure t)
-
-(load-theme 'jbeans t)
 
 ;;ui improvements
 (use-package swiper
@@ -94,11 +93,11 @@
   :if (display-graphic-p)
   :ensure t)
 
-(use-package all-the-icons
-  :if (display-graphic-p)
-  :ensure t)
-
 (use-package all-the-icons-dired
   :ensure t
   :hook ((dired-mode . all-the-icons-dired-mode)
          (dired-mode . dired-hide-details-mode)))
+
+;; see doc, install cmake and libtool-bin
+(use-package vterm
+    :ensure t)
