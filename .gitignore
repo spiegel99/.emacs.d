@@ -1,6 +1,6 @@
 # Emacs auto-save files
 auto-save-list/
-
+transient/
 # Native compilation cache (Emacs 28+)
 eln-cache/
 eshell/
@@ -18,3 +18,5 @@ elpa/
 
 # Lock files
 .#*
+
+*.eld

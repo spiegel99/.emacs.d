@@ -4,8 +4,9 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(all-the-icons all-the-icons-dired counsel ivy-rich jbeans-theme
-		   popup-kill-ring rainbow-delimiters swiper vterm)))
+   '(all-the-icons all-the-icons-dired counsel counsel-projectile
+		   ivy-rich jbeans-theme magit popup-kill-ring
+		   projectile rainbow-delimiters swiper vterm)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
