@@ -233,6 +233,46 @@
 ;export org files to markdown
 (require 'ox-md)
 
+;;org roam
+;;might need to install a c compiler [see doc]
+(use-package org-roam
+  :ensure t
+  :custom
+  (org-roam-directory (file-truename "~/notes"))
+  (org-roam-completion-everywhere t)
+  (org-roam-capture-templates
+    '(("d" "default" plain
+      "%?"
+      :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
+      :unnarrowed t)
+      ("m" "meeting" plain
+      (file "~/templates/meeting_note_template.org")
+      :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
+      :unnarrowed t)
+      ("r" "recipe" plain
+      (file "~/templates/recipe_template.org")
+      :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
+      :unnarrowed t)
+      ("b" "book" plain
+      (file "~/templates/book_note_template.org")
+      :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
+      :unnarrowed t)))
+  :bind
+  (("C-c n f" . org-roam-node-find)
+   ("C-c n g" . org-roam-graph)
+   ("C-c n i" . org-roam-node-insert)
+;   ("C-c n c" . org-roam-capture)
+   ("C-c n l" . org-roam-buffer-toggle)
+         ;; Dailies
+   ("C-c n j" . org-roam-dailies-capture-today))
+  :config
+  (setq org-roam-node-display-template (concat "${title:*} " (propertize "${tags:10}" 'face 'org-tag)))
+  (org-roam-db-autosync-mode))
+
+(use-package org-roam-ui
+  :ensure t
+  :after org-roam)
+
 ;;keybindings
 (global-set-key "\C-ca" 'org-agenda)
 (global-set-key "\C-cc" 'org-capture)
