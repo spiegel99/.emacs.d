@@ -1,5 +1,0 @@
-#+filetags: :recipe:
-* ingredients
-  %?
-* recipe
-* author
