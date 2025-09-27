@@ -5,8 +5,9 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    '(all-the-icons all-the-icons-dired counsel counsel-projectile
-		   ivy-rich jbeans-theme magit popup-kill-ring
-		   projectile rainbow-delimiters swiper vterm)))
+		   ivy-rich jbeans-theme magit org-bullets
+		   org-pomodoro popup-kill-ring projectile
+		   rainbow-delimiters spaceline swiper vterm)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

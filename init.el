@@ -15,6 +15,8 @@
 
 (set-frame-font "Iosevka Term 17" nil t)
 ;; installed package jbeans-theme
+;; line 227      `(line-number ((,class (:foreground ,jbeans-grey-5 :background ,jbeans-grey-0)))) before it was 2,  removed grey separation between background and line number
+
 (load-theme 'jbeans t)
 
 ;send auto-save files to another directory
@@ -39,6 +41,20 @@
 
 (require 'use-package)
 (setq use-package-always-ensure t)
+
+;;appearance
+(use-package spaceline
+  :ensure t
+  :config
+  (require 'spaceline-config)
+  (setq powerline-default-separator (quote arrow))
+  (spaceline-spacemacs-theme))
+
+(dolist (mode '(term-mode-hook
+                shell-mode-hook
+		vterm-mode-hook
+                eshell-mode-hook))
+  (add-hook mode (lambda () (display-line-numbers-mode 0))))
 
 ;;ui improvements
 (use-package swiper
@@ -121,3 +137,105 @@
 (use-package magit
   :custom
   (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
+
+;;org
+(use-package org
+  :config
+  (setq org-agenda-start-with-log-mode t)
+  (setq org-log-done 'time)
+  (setq org-log-into-drawer t)
+  (setq org-adapt-indentation t)
+  (setq org-agenda-files
+	'("~/orgfiles/todo.org"
+	  "~/orgfiles/agenda.org"))
+  (setq org-agenda-inhibit-startup t)
+  (require 'org-habit)
+   (add-to-list 'org-modules 'org-habit)
+  (setq org-habit-graph-column 60)
+  (setq org-habit-show-habits-only-for-today nil)
+
+  (setq org-todo-keywords
+	'((sequence "TODO(t)" "ONHOLD(h)" "DOCUMENT(w)" "DOING(a)" "|" "DONE(d)" "CANC(c)")))
+  (setq org-todo-keyword-faces
+        '(("DOING" . "orange") ("ONHOLD" . "grey") ("DOCUMENT" . "red")))
+  (setq org-refile-targets
+	'(("archive.org" :maxlevel . 1)))
+  ;; Save Org buffers after refiling
+  (advice-add 'org-refile :after 'org-save-all-org-buffers)
+
+  (setq org-agenda-custom-commands 
+   '(("v" "Event" tags "event")
+     ("w" "Workflow Status"
+     ((todo "TODO"
+            ((org-agenda-overriding-header "BACKLOG")
+             (org-agenda-files org-agenda-files)))
+      (todo "ONHOLD"
+            ((org-agenda-overriding-header "ON HOLD")
+             (org-agenda-files org-agenda-files)))
+      (todo "DOING"
+            ((org-agenda-overriding-header "IN PROGRESS")
+             (org-agenda-files org-agenda-files)))
+      (todo "DOCUMENT"
+            ((org-agenda-overriding-header "WRITE DOCUMENTATION")
+             (org-agenda-files org-agenda-files)))
+      (todo "DONE"
+            ((org-agenda-overriding-header "FINISHED")
+             (org-agenda-files org-agenda-files)))
+      (todo "CANC"
+            ((org-agenda-overriding-header "CANCELLED")
+             (org-agenda-files org-agenda-files)))))))
+  ;; Define Org Capture templates
+  (setq org-capture-templates
+      '(("t" "task")
+        ("tt" "task" entry (file "~/orgfiles/todo.org")
+         "* TODO %?")
+        ("tl" "task with link" entry (file "~/orgfiles/todo.org")
+         "* TODO %?\n  %a\n  %i")
+	
+	("l" "ledger entry")	
+	("lc" "caisse d'epargne VISA" plain
+                (file "~/finance/journal2025.dat")
+	        "%(org-read-date) * %^{Payee} 
+  expenses:%^{Account}  %^{Amount} EUR
+  liabilities:CEvisa")
+	
+	("n" "quick note")
+	("nn" "note" entry (file "~/orgfiles/refile.org")
+	 "* %?")
+        ("nl" "note with link" entry (file "~/orgfiles/refile.org")
+         "* %?\n  %a\n  %i")
+
+	("e" "event")
+	("ee" "add event" entry (file "~/orgfiles/events.org")
+	 "* %?")
+	
+	("a" "agenda")
+	("aa" "add item in agenda" entry (file "~/orgfiles/agenda.org")
+	 "* %?"))))
+
+(use-package org-bullets
+  :ensure t
+  :init
+  (add-hook 'org-mode-hook (lambda ()
+                             (org-bullets-mode 1)))) 
+
+;use aplay or install paplay
+(use-package org-pomodoro
+   :commands org-pomodoro
+   :config
+   (setq org-pomodoro-audio-player "/usr/bin/paplay")
+   (setq org-pomodoro-short-break-sound "~/.emacs.d/sounds/three_beeps.wav")
+   (setq org-pomodoro-long-break-sound "~/.emacs.d/sounds/three)beeps.wav")
+   (setq org-pomodoro-finished-sound "~/.emacs.d/sounds/zelda.wav"))
+
+;<s TAB to generate quickly a code block
+(require 'org-tempo)
+;export org files to markdown
+(require 'ox-md)
+
+;;keybindings
+(global-set-key "\C-ca" 'org-agenda)
+(global-set-key "\C-cc" 'org-capture)
+(global-set-key "\C-cl" 'calendar)
+(global-set-key "\C-cv" 'visual-line-mode)
+(global-set-key "\C-cd" 'copy-from-above-command)
