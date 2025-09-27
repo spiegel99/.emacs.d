@@ -1,0 +1,11 @@
+#+filetags: :meeting:
+* metadata
+  title: ${title}
+  date: %U
+  in attendance: %^{in attendance}
+
+* note
+
+  %?
+
+* actions

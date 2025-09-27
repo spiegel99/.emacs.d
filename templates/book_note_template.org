@@ -1,0 +1,13 @@
+#+filetags :book:
+* metadata
+  - title: ${title}
+  - author: $^{author}
+  - published: $^{year}
+  - genre: $^{genre}
+  - keywords: $^{keywords}
+
+* summary
+
+* notes
+
+  %?
