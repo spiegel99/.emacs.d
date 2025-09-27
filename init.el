@@ -207,7 +207,7 @@
 
 	("e" "event")
 	("ee" "add event" entry (file "~/orgfiles/events.org")
-	 "* %?")
+	 "* %? :event:")
 	
 	("a" "agenda")
 	("aa" "add item in agenda" entry (file "~/orgfiles/agenda.org")
@@ -246,15 +246,15 @@
       :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
       :unnarrowed t)
       ("m" "meeting" plain
-      (file "~/templates/meeting_note_template.org")
+      (file "~/.emacs.d/templates/meeting_note_template.org")
       :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
       :unnarrowed t)
       ("r" "recipe" plain
-      (file "~/templates/recipe_template.org")
+      (file "~/.emacs.d/templates/recipe_template.org")
       :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
       :unnarrowed t)
       ("b" "book" plain
-      (file "~/templates/book_note_template.org")
+      (file "~/.emacs.d/templates/book_note_template.org")
       :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
       :unnarrowed t)))
   :bind

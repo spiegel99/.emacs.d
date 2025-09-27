@@ -22,3 +22,5 @@ elpa/
 *.eld
 bookmarks
 org-roam.db
+.org-id-locations
+custom.el
