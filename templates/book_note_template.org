@@ -1,4 +1,4 @@
-#+filetags :book:
+#+filetags: :book:
 * metadata
   - title: ${title}
   - author: $^{author}

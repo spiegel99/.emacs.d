@@ -12,6 +12,7 @@
 ;;replace yes or no by 'y' or 'n'
 (fset 'yes-or-no-p 'y-or-n-p)
 (setq visible-bell t)
+(electric-pair-mode t)
 
 (set-frame-font "Iosevka Term 17" nil t)
 ;; installed package jbeans-theme
@@ -43,18 +44,21 @@
 (setq use-package-always-ensure t)
 
 ;;appearance
+(use-package dashboard
+  :ensure t
+  :config
+    (dashboard-setup-startup-hook)
+    (setq dashboard-startup-banner "~/.emacs.d/img/ghibli.png")
+    (setq dashboard-items '((agenda . 5)
+                        (recents  . 5)))
+    (setq dashboard-banner-logo-title "See you, space cowboy"))
+
 (use-package spaceline
   :ensure t
   :config
   (require 'spaceline-config)
   (setq powerline-default-separator (quote arrow))
   (spaceline-spacemacs-theme))
-
-(dolist (mode '(term-mode-hook
-                shell-mode-hook
-		vterm-mode-hook
-                eshell-mode-hook))
-  (add-hook mode (lambda () (display-line-numbers-mode 0))))
 
 ;;ui improvements
 (use-package swiper
@@ -116,7 +120,11 @@
 
 ;; see doc, install cmake and libtool-bin
 (use-package vterm
-    :ensure t)
+  :ensure t
+  :init
+  (global-set-key (kbd "C-c <return>") 'vterm))
+
+(add-hook 'vterm-mode-hook (lambda () (display-line-numbers-mode -1)))
 
 ;; project management
 ;; also installed ripgrep on terminal to use counsel-projectile-rg
@@ -147,6 +155,7 @@
   (setq org-adapt-indentation t)
   (setq org-agenda-files
 	'("~/orgfiles/todo.org"
+	  "~/orgfiles/events.org"
 	  "~/orgfiles/agenda.org"))
   (setq org-agenda-inhibit-startup t)
   (require 'org-habit)
@@ -193,7 +202,7 @@
          "* TODO %?\n  %a\n  %i")
 	
 	("l" "ledger entry")	
-	("lc" "caisse d'epargne VISA" plain
+	("lc" "CE VISA" plain
                 (file "~/finance/journal2025.dat")
 	        "%(org-read-date) * %^{Payee} 
   expenses:%^{Account}  %^{Amount} EUR
@@ -225,7 +234,7 @@
    :config
    (setq org-pomodoro-audio-player "/usr/bin/paplay")
    (setq org-pomodoro-short-break-sound "~/.emacs.d/sounds/three_beeps.wav")
-   (setq org-pomodoro-long-break-sound "~/.emacs.d/sounds/three)beeps.wav")
+   (setq org-pomodoro-long-break-sound "~/.emacs.d/sounds/three_beeps.wav")
    (setq org-pomodoro-finished-sound "~/.emacs.d/sounds/zelda.wav"))
 
 ;<s TAB to generate quickly a code block
@@ -272,6 +281,32 @@
 (use-package org-roam-ui
   :ensure t
   :after org-roam)
+
+;;org-babel to execute codes in org buffers
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((shell . t)
+   (emacs-lisp . t)))
+
+;; calendar
+;; Define faces for different file colors
+(defface busy-1 '((t :foreground "white" :background "#607d8b")) "")
+(defface busy-2 '((t :foreground "black" :background "white")) "")
+
+(defun highlight-scheduled-days (file face month year indent)
+  "Highlight days with scheduled events from the specified file with the given face."
+  (dotimes (i 31)
+    (let* ((date (list month (1+ i) year))
+           (entries (org-agenda-get-day-entries file date)))
+      (when entries
+        (calendar-mark-visible-date date face)))))
+
+;; Hook for highlighting scheduled days in different files with different faces
+(defadvice calendar-generate-month
+  (after highlight-scheduled-days-advice (month year indent) activate)
+  "Highlight days with scheduled events from multiple org files."
+  (highlight-scheduled-days "~/orgfiles/agenda.org" 'busy-2 month year indent)
+  (highlight-scheduled-days "~/orgfiles/events.org" 'busy-1 month year indent))
 
 ;;keybindings
 (global-set-key "\C-ca" 'org-agenda)
