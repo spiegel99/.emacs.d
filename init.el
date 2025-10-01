@@ -49,8 +49,8 @@
   :config
     (dashboard-setup-startup-hook)
     (setq dashboard-startup-banner "~/.emacs.d/img/onepiece.png")
-    (setq dashboard-items '((agenda . 5)
-                        (recents  . 5)))
+    (setq dashboard-items '((agenda . 4)
+                        (recents  . 4)))
     (setq dashboard-banner-logo-title "See you, space cowboy"))
 
 (use-package spaceline
@@ -221,7 +221,7 @@
 
 	("e" "event")
 	("ee" "add event" entry (file "~/orgfiles/events.org")
-	 "* %?")
+	 "* %? :event:")
 	
 	("a" "agenda")
 	("aa" "add item in agenda" entry (file "~/orgfiles/agenda.org")
@@ -288,11 +288,15 @@
   :after org-roam)
 
 ;;org-babel to execute codes in org buffers
+;install ditaa to use it in org mode
 (org-babel-do-load-languages
  'org-babel-load-languages
  '((shell . t)
-   (emacs-lisp . t)))
+   (emacs-lisp . t)
+   (ditaa . t)))
 
+;;tells org babel where to find the ditaa.jar file
+(setq org-ditaa-jar-path "/usr/share/ditaa/ditaa.jar")
 ;use visual-line-mode for org files
 (add-hook 'org-mode-hook #'visual-line-mode)
 
@@ -329,3 +333,4 @@
 (global-set-key "\C-cl" 'calendar)
 (global-set-key "\C-cv" 'visual-line-mode)
 (global-set-key "\C-cd" 'copy-from-above-command)
+(global-set-key "\C-cf" 'org-pomodoro)
