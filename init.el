@@ -48,7 +48,7 @@
   :ensure t
   :config
     (dashboard-setup-startup-hook)
-    (setq dashboard-startup-banner "~/.emacs.d/img/ghibli.png")
+    (setq dashboard-startup-banner "~/.emacs.d/img/onepiece.png")
     (setq dashboard-items '((agenda . 5)
                         (recents  . 5)))
     (setq dashboard-banner-logo-title "See you, space cowboy"))
@@ -124,7 +124,7 @@
   :init
   (global-set-key (kbd "C-c <return>") 'vterm))
 
-(add-hook 'vterm-mode-hook (lambda () (display-line-numbers-mode -1)))
+(add-hook 'vterm-mode-hook (lambda () (display-line-numbers-mode 0)))
 
 ;; project management
 ;; also installed ripgrep on terminal to use counsel-projectile-rg
@@ -207,7 +207,12 @@
 	        "%(org-read-date) * %^{Payee} 
   expenses:%^{Account}  %^{Amount} EUR
   liabilities:CEvisa")
-	
+	("ld" "debit differe" plain
+                (file "~/finance/journal2025.dat")
+	        "%(org-read-date) * debit differe 
+  liabilities:CEvisa  %^{Amount} EUR
+  assets:CEbank:compte")
+
 	("n" "quick note")
 	("nn" "note" entry (file "~/orgfiles/refile.org")
 	 "* %?")
@@ -288,6 +293,9 @@
  '((shell . t)
    (emacs-lisp . t)))
 
+;use visual-line-mode for org files
+(add-hook 'org-mode-hook #'visual-line-mode)
+
 ;; calendar
 ;; Define faces for different file colors
 (defface busy-1 '((t :foreground "white" :background "#607d8b")) "")
@@ -307,6 +315,13 @@
   "Highlight days with scheduled events from multiple org files."
   (highlight-scheduled-days "~/orgfiles/agenda.org" 'busy-2 month year indent)
   (highlight-scheduled-days "~/orgfiles/events.org" 'busy-1 month year indent))
+
+;; finance
+(use-package ledger-mode
+  :ensure t
+  :init
+  (setq ledger-clear-whole-transactions 1)
+  :mode "\\.dat\\'")
 
 ;;keybindings
 (global-set-key "\C-ca" 'org-agenda)
