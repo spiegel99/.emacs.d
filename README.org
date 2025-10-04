@@ -6,7 +6,9 @@
 * Introduction
 Emacs is the best text editor out there, you should probably use it.
 
-This configuration is built for Linux and focuses on simplicity and efficiency.
+This configuration was tested on Linux and focuses on simplicity and reproducibility.
+It’s designed to be easy to install and replicate on a new device with minimal setup.
+Wherever possible, I rely on Emacs’ built-in features to reduce external dependencies.
 
 * Main Use Cases
 - :white_check_mark: Task and project management ([[https://orgmode.org/][Org Mode]])
