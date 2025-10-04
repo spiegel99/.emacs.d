@@ -1,7 +1,7 @@
 #+TITLE: My minimal emacs config
 #+OPTIONS: toc:nil
 
-[[file:img/screenshot.png][Screenshot]]
+[[file:img/screenshot.png]]
 
 * Introduction
 Emacs is the best text editor out there, you should probably use it.
