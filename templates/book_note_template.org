@@ -1,10 +1,15 @@
 #+filetags: :book:
 * metadata
-  - title: ${title}
-  - author: $^{author}
-  - published: $^{year}
-  - genre: $^{genre}
-  - keywords: $^{keywords}
+** title
+   ${title}
+** author
+   %^{author}
+** published
+   %^{year}
+** genre
+   %^{genre}
+** keywords
+   %^{keywords}
 
 * summary
 

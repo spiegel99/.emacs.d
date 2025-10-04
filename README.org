@@ -1,0 +1,17 @@
+#+TITLE: My minimal emacs config
+#+OPTIONS: toc:nil
+
+[[file:~/.emacs.d/img/screenshot.png]]
+
+* Introduction
+Emacs is the best text editor out there, you should probably use it.
+
+This configuration is built for Linux and focuses on simplicity and efficiency.
+
+* Main Use Cases
+- :clipboard:  Task and project management ([[https://orgmode.org/][Org Mode]])
+- :notebook:  Note-taking with [[https://www.orgroam.com/][Org-roam]]
+- :ledger:  Personal finance tracking with [[https://ledger-cli.org/][Ledger]] and ledger-mode
+- :computer:  Coding
+- :page_facing_up: Technical documentation
+

@@ -12,13 +12,15 @@
 ;;replace yes or no by 'y' or 'n'
 (fset 'yes-or-no-p 'y-or-n-p)
 (setq visible-bell t)
-(electric-pair-mode t)
+(electric-pair-mode 1)
 
 (set-frame-font "Iosevka Term 17" nil t)
+
 ;; installed package jbeans-theme
 ;; line 227      `(line-number ((,class (:foreground ,jbeans-grey-5 :background ,jbeans-grey-0)))) before it was 2,  removed grey separation between background and line number
 
 (load-theme 'jbeans t)
+;(load-theme 'modus-operandi t)
 
 ;send auto-save files to another directory
 (setq backup-directory-alist '(("." . "~/backup")))
@@ -51,7 +53,7 @@
     (setq dashboard-startup-banner "~/.emacs.d/img/onepiece.png")
     (setq dashboard-items '((agenda . 4)
                         (recents  . 4)))
-    (setq dashboard-banner-logo-title "See you, space cowboy"))
+    (setq dashboard-banner-logo-title "Parfois, le cœur se serre à la pensée des choses qui auraient pu être et qui n'ont pas été"))
 
 (use-package spaceline
   :ensure t
@@ -262,6 +264,7 @@
       ("m" "meeting" plain
       (file "~/.emacs.d/templates/meeting_note_template.org")
       :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
+      :clock-in :clock-resume
       :unnarrowed t)
       ("r" "recipe" plain
       (file "~/.emacs.d/templates/recipe_template.org")
@@ -299,6 +302,12 @@
 (setq org-ditaa-jar-path "/usr/share/ditaa/ditaa.jar")
 ;use visual-line-mode for org files
 (add-hook 'org-mode-hook #'visual-line-mode)
+
+;;inhibit electric pair mode for <>
+(add-hook 'org-mode-hook (lambda ()
+           (setq-local electric-pair-inhibit-predicate
+                   `(lambda (c)
+                  (if (char-equal c ?<) t (,electric-pair-inhibit-predicate c))))))
 
 ;; calendar
 ;; Define faces for different file colors
