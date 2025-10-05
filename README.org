@@ -18,8 +18,13 @@ Wherever possible, I rely on Emacs’ built-in features to reduce external depen
 - :page_facing_up: Technical documentation
 
 * Dependencies
-- rip grep for ~counsel-projectile-rg~
-- a C compiler for /org roam/
+- ripgrep for ~counsel-projectile-rg~
+- a C compiler for /org roam/ (like gcc)
 - cmake and libtool-bin for /vterm/
 - paplay for /org-pomodoro/ if using WSL
 - ditaa
+- ledger
+
+* Installation notes
+Create a backup folder for backup files.
+comment the two first lines and create custom.el afterwards.
