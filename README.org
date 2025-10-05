@@ -17,3 +17,9 @@ Wherever possible, I rely on Emacs’ built-in features to reduce external depen
 - :computer:  Coding
 - :page_facing_up: Technical documentation
 
+* Dependencies
+- rip grep for ~counsel-projectile-rg~
+- a C compiler for /org roam/
+- cmake and libtool-bin for /vterm/
+- paplay for /org-pomodoro/ if using WSL
+- ditaa
