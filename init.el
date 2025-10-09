@@ -329,6 +329,14 @@
   (highlight-scheduled-days "~/orgfiles/agenda.org" 'busy-2 month year indent)
   (highlight-scheduled-days "~/orgfiles/events.org" 'busy-1 month year indent))
 
+; launch agenda for specific org file (for projects)
+; easier to maintain because the target file can change or not be present (depending on the device I use). If the file was added to org-agenda-files, it would generate an error for the typical org-agenda.
+(defun specific-proj-agenda()
+  "lauch org-agenda for project file"
+  (interactive)
+  (let ((org-agenda-files '("~/projects/active/PRJ-0001-flat/flat.org"))) (org-agenda))
+  )
+
 ;; finance
 (use-package ledger-mode
   :ensure t
@@ -343,3 +351,4 @@
 (global-set-key "\C-cv" 'visual-line-mode)
 (global-set-key "\C-cd" 'copy-from-above-command)
 (global-set-key "\C-cf" 'org-pomodoro)
+(global-set-key "\C-cs" 'specific-proj-agenda)
