@@ -4,11 +4,7 @@
 [[file:img/screenshot.png]]
 
 * Introduction
-Emacs is the best text editor out there, you should probably use it.
-
-This configuration was tested on Linux and focuses on simplicity and reproducibility.
-It’s designed to be easy to install and replicate on a new device with minimal setup.
-Wherever possible, I rely on Emacs’ built-in features to reduce external dependencies.
+Emacs is the best text editor out there, you should probably use it. Config tested on linux.
 
 * Main Use Cases
 - :white_check_mark: Task and project management ([[https://orgmode.org/][Org Mode]])
@@ -21,10 +17,10 @@ Wherever possible, I rely on Emacs’ built-in features to reduce external depen
 - ripgrep for ~counsel-projectile-rg~
 - a C compiler for /org roam/ (like gcc)
 - cmake and libtool-bin for /vterm/
-- paplay for /org-pomodoro/ if using WSL
+- paplay for /org-pomodoro/ (only WSL)
 - ditaa
 - ledger
 
 * Installation notes
 Create a backup folder for backup files.
-comment the two first lines and create custom.el afterwards.
+Create custom.el file.
