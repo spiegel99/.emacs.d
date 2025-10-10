@@ -341,7 +341,6 @@
   "runs gsync (git autocommit and push) in current directory"
   (interactive)
   (shell-command "sh ~/repos/git-autocommit/gsync.sh")
-  (message "Git repo synced")
   )
 
 ;; finance
