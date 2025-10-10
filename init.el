@@ -19,8 +19,8 @@
 ;; installed package jbeans-theme
 ;; line 227      `(line-number ((,class (:foreground ,jbeans-grey-5 :background ,jbeans-grey-0)))) before it was 2,  removed grey separation between background and line number
 
-(load-theme 'jbeans t)
-;(load-theme 'modus-operandi t)
+;(load-theme 'jbeans t)
+(load-theme 'modus-operandi-tinted t)
 
 ;send auto-save files to another directory
 (setq backup-directory-alist '(("." . "~/backup")))
@@ -337,6 +337,13 @@
   (let ((org-agenda-files '("~/projects/active/PRJ-0001-flat/flat.org"))) (org-agenda))
   )
 
+(defun gsync()
+  "runs gsync (git autocommit and push) in current directory"
+  (interactive)
+  (shell-command "sh ~/repos/git-autocommit/gsync.sh")
+  (message "Syncing...")
+  )
+
 ;; finance
 (use-package ledger-mode
   :ensure t
@@ -352,3 +359,4 @@
 (global-set-key "\C-cd" 'copy-from-above-command)
 (global-set-key "\C-cf" 'org-pomodoro)
 (global-set-key "\C-cs" 'specific-proj-agenda)
+(global-set-key "\C-cg" 'gsync)
