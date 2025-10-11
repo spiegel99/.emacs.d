@@ -330,11 +330,11 @@
   (highlight-scheduled-days "~/orgfiles/events.org" 'busy-1 month year indent))
 
 ; launch agenda for specific org file (for projects)
-; easier to maintain because the target file can change or not be present (depending on the device I use). If the file was added to org-agenda-files, it would generate an error for the typical org-agenda.
+; easier to maintain because the target file can change or not be present (depending on the device I use). If the file was added to org-agenda-files, it would generate an error for the typical org-agenda/dashboard.
 (defun specific-proj-agenda()
   "lauch org-agenda for project file"
   (interactive)
-  (let ((org-agenda-files '("~/projects/active/PRJ-0001-flat/flat.org"))) (org-agenda))
+  (let ((org-agenda-files '("~/projects/active/PRJ-0001-flat/flat.org" "~/projects/active/PRJ-0002-moving/moving.org"))) (org-agenda))
   )
 
 (defun gsync()
