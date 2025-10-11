@@ -170,7 +170,7 @@
   (setq org-todo-keyword-faces
         '(("DOING" . "orange") ("ONHOLD" . "grey") ("DOCUMENT" . "red")))
   (setq org-refile-targets
-	'(("archive.org" :maxlevel . 1)))
+	'(("~/backup/archive.org" :maxlevel . 1)))
   ;; Save Org buffers after refiling
   (advice-add 'org-refile :after 'org-save-all-org-buffers)
 
