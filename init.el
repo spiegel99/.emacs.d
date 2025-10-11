@@ -340,7 +340,7 @@
 (defun gsync()
   "runs gsync (git autocommit and push) in current directory"
   (interactive)
-  (shell-command "sh ~/repos/git-autocommit/gsync.sh")
+  (shell-command "sh ~/repos/git-auto/gsync.sh")
   )
 
 ;; finance
