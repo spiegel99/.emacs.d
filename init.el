@@ -19,8 +19,8 @@
 ;; installed package jbeans-theme
 ;; line 227      `(line-number ((,class (:foreground ,jbeans-grey-5 :background ,jbeans-grey-0)))) before it was 2,  removed grey separation between background and line number
 
-;(load-theme 'jbeans t)
-(load-theme 'modus-operandi-tinted t)
+(load-theme 'jbeans t)
+;(load-theme 'modus-operandi-tinted t)
 
 ;send auto-save files to another directory
 (setq backup-directory-alist '(("." . "~/backup")))
@@ -208,11 +208,11 @@
                 (file "~/finance/journal2025.dat")
 	        "%(org-read-date) * %^{Payee} 
   expenses:%^{Account}  %^{Amount} EUR
-  liabilities:CEvisa")
+  liabilities:CEbank:visa")
 	("ld" "debit differe" plain
                 (file "~/finance/journal2025.dat")
 	        "%(org-read-date) * debit differe 
-  liabilities:CEvisa  %^{Amount} EUR
+  liabilities:CEbank:visa  %^{Amount} EUR
   assets:CEbank:compte")
 
 	("n" "quick note")
