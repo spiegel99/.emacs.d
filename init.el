@@ -1,3 +1,6 @@
+;; runs script that syncs my notes with git
+(start-process "update-notes" "*Messages*" "bash" "-c" "~/repos/git-auto/update-notes.sh")
+
 (setq custom-file "~/.emacs.d/custom.el")
 (load custom-file)
 
