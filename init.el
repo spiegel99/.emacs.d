@@ -204,13 +204,13 @@
          "* TODO %?\n  %a\n  %i")
 	
 	("l" "ledger entry")	
-	("lc" "CE VISA" plain
-                (file "~/finance/journal2025.dat")
+	("lc" "paiement CE VISA" plain
+                (file "~/finance/2025/journal.dat")
 	        "%(org-read-date) * %^{Payee} 
   expenses:%^{Account}  %^{Amount} EUR
   liabilities:CEbank:visa")
 	("ld" "debit differe" plain
-                (file "~/finance/journal2025.dat")
+                (file "~/finance/2025/journal.dat")
 	        "%(org-read-date) * debit differe 
   liabilities:CEbank:visa  %^{Amount} EUR
   assets:CEbank:compte")
@@ -308,6 +308,9 @@
            (setq-local electric-pair-inhibit-predicate
                    `(lambda (c)
                   (if (char-equal c ?<) t (,electric-pair-inhibit-predicate c))))))
+
+(use-package gnuplot
+  :ensure t)
 
 ;; calendar
 ;; Define faces for different file colors

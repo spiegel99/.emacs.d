@@ -20,6 +20,7 @@ Emacs is the best text editor out there, you should probably use it. Config test
 - paplay for /org-pomodoro/ (only WSL)
 - ditaa
 - ledger
+- gnuplot for /org-plot/
 
 * Installation notes
 Create a backup folder for backup files.
