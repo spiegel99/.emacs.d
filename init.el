@@ -339,6 +339,7 @@
 ;;;; | personal emacs lisps programs |
 ;;;; +-------------------------------+
 
+;; calendar
 (defface busy-1 '((t :foreground "white" :background "#607d8b")) "")
 (defface busy-2 '((t :foreground "black" :background "white")) "")
 
@@ -350,7 +351,7 @@
       (when entries
         (calendar-mark-visible-date date face)))))
 
-;; Hook for highlighting scheduled days in different files with different faces
+;; hook for highlighting scheduled days in different files with different faces
 (defadvice calendar-generate-month
   (after highlight-scheduled-days-advice (month year indent) activate)
   "Highlight days with scheduled events from multiple org files."

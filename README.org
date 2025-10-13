@@ -3,17 +3,16 @@
 
 [[file:img/screenshot.png]]
 
-* Introduction
-Emacs is the best text editor out there, you should probably use it. Config tested on linux.
+Emacs is beautiful.
 
-* Main Use Cases
+* main use cases
 - :white_check_mark: Task and project management ([[https://orgmode.org/][Org Mode]])
 - :fountain_pen:  Note-taking with [[https://www.orgroam.com/][Org-roam]]
 - :heavy_dollar_sign:  Personal finance tracking with [[https://ledger-cli.org/][Ledger]] and ledger-mode
 - :computer:  Coding
 - :page_facing_up: Technical documentation
 
-* Dependencies
+* dependencies
 - ripgrep for ~counsel-projectile-rg~
 - a C compiler for /org roam/ (like gcc)
 - cmake and libtool-bin for /vterm/
@@ -22,6 +21,6 @@ Emacs is the best text editor out there, you should probably use it. Config test
 - ledger
 - gnuplot for /org-plot/
 
-* Installation notes
+* notes
 Create a backup folder for backup files.
 Create custom.el file.
