@@ -3,8 +3,10 @@
 
 (setq custom-file "~/.emacs.d/custom.el")
 (load custom-file)
-
-;;;; basic configuration
+ 
+;;;; +---------------------+
+;;;; | basic configuration |
+;;;; +---------------------+
 
 (setq inhibit-startup-message t)
 (tool-bar-mode -1)
@@ -48,7 +50,9 @@
 (require 'use-package)
 (setq use-package-always-ensure t)
 
-;;;; appearance and ui improvements
+;;;; +--------------------------------+
+;;;; | appearance and ui improvements |
+;;;; +--------------------------------+
 
 (use-package dashboard
   :ensure t
@@ -123,8 +127,9 @@
   :hook ((dired-mode . all-the-icons-dired-mode)
          (dired-mode . dired-hide-details-mode)))
 
-
-;;;; programming
+;;;; +-------------+
+;;;; | programming |
+;;;; +-------------+
 
 ;; see doc, install cmake and libtool-bin
 (use-package vterm
@@ -153,7 +158,9 @@
   :custom
   (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
 
-;;;; org
+;;;; +-----+
+;;;; | org |
+;;;; +-----+
 
 (use-package org
   :config
@@ -318,7 +325,9 @@
 (use-package gnuplot
   :ensure t)
 
-;;;; finance
+;;;; +---------+
+;;;; | finance |
+;;;; +---------+
 
 (use-package ledger-mode
   :ensure t
@@ -326,7 +335,9 @@
   (setq ledger-clear-whole-transactions 1)
   :mode "\\.dat\\'")
 
-;;;;  personal emacs lisps programs
+;;;; +-------------------------------+
+;;;; | personal emacs lisps programs |
+;;;; +-------------------------------+
 
 (defface busy-1 '((t :foreground "white" :background "#607d8b")) "")
 (defface busy-2 '((t :foreground "black" :background "white")) "")
