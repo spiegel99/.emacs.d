@@ -4,7 +4,8 @@
 (setq custom-file "~/.emacs.d/custom.el")
 (load custom-file)
 
-;;basic configuration
+;;;; basic configuration
+
 (setq inhibit-startup-message t)
 (tool-bar-mode -1)
 (menu-bar-mode -1)
@@ -20,12 +21,11 @@
 (set-frame-font "Iosevka Term 17" nil t)
 
 ;; installed package jbeans-theme
-;; line 227      `(line-number ((,class (:foreground ,jbeans-grey-5 :background ,jbeans-grey-0)))) before it was 2,  removed grey separation between background and line number
-
+;; personal tweak: line 227      `(line-number ((,class (:foreground ,jbeans-grey-5 :background ,jbeans-grey-0)))) before it was 2,  removed grey separation between background and line number
 (load-theme 'jbeans t)
 ;(load-theme 'modus-operandi-tinted t)
 
-;send auto-save files to another directory
+;;send auto-save files to another directory
 (setq backup-directory-alist '(("." . "~/backup")))
 (with-eval-after-load 'tramp
       (add-to-list 'tramp-backup-directory-alist
@@ -41,14 +41,15 @@
 (unless package-archive-contents
   (package-refresh-contents))
 
-;; Initialize use-package on non-Linux platforms
+;; initialize use-package on non-Linux platforms
 (unless (package-installed-p 'use-package)
   (package-install 'use-package))
 
 (require 'use-package)
 (setq use-package-always-ensure t)
 
-;;appearance
+;;;; appearance and ui improvements
+
 (use-package dashboard
   :ensure t
   :config
@@ -65,7 +66,6 @@
   (setq powerline-default-separator (quote arrow))
   (spaceline-spacemacs-theme))
 
-;;ui improvements
 (use-package swiper
   :ensure t)
   
@@ -113,7 +113,7 @@
   (which-key-mode)
   (setq which-key-idle-delay 1))
 
-;; install fonts, run all-the-icons-install-fonts just after, see doc
+;; install fonts: run all-the-icons-install-fonts just after package is installed, see doc
 (use-package all-the-icons
   :if (display-graphic-p)
   :ensure t)
@@ -123,6 +123,9 @@
   :hook ((dired-mode . all-the-icons-dired-mode)
          (dired-mode . dired-hide-details-mode)))
 
+
+;;;; programming
+
 ;; see doc, install cmake and libtool-bin
 (use-package vterm
   :ensure t
@@ -131,7 +134,6 @@
 
 (add-hook 'vterm-mode-hook (lambda () (display-line-numbers-mode 0)))
 
-;; project management
 ;; also installed ripgrep on terminal to use counsel-projectile-rg
 (use-package projectile
   :diminish projectile-mode
@@ -151,7 +153,8 @@
   :custom
   (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
 
-;;org
+;;;; org
+
 (use-package org
   :config
   (setq org-agenda-start-with-log-mode t)
@@ -315,8 +318,16 @@
 (use-package gnuplot
   :ensure t)
 
-;; calendar
-;; Define faces for different file colors
+;;;; finance
+
+(use-package ledger-mode
+  :ensure t
+  :init
+  (setq ledger-clear-whole-transactions 1)
+  :mode "\\.dat\\'")
+
+;;;;  personal emacs lisps programs
+
 (defface busy-1 '((t :foreground "white" :background "#607d8b")) "")
 (defface busy-2 '((t :foreground "black" :background "white")) "")
 
@@ -335,28 +346,23 @@
   (highlight-scheduled-days "~/orgfiles/agenda.org" 'busy-2 month year indent)
   (highlight-scheduled-days "~/orgfiles/events.org" 'busy-1 month year indent))
 
-; launch agenda for specific org file (for projects)
-; easier to maintain because the target file can change or not be present (depending on the device I use). If the file was added to org-agenda-files, it would generate an error for the typical org-agenda/dashboard.
+;; launch agenda for specific org file (for projects)
+;; easier to maintain because the target file can change or not be present (depending on the device I use). If the file was added to org-agenda-files, it would generate an error for the typical org-agenda/dashboard.
 (defun specific-proj-agenda()
   "lauch org-agenda for project file"
   (interactive)
   (let ((org-agenda-files '("~/projects/active/PRJ-0001-flat/flat.org" "~/projects/active/PRJ-0002-moving/moving.org"))) (org-agenda))
   )
 
+;; runs gsync shell command
 (defun gsync()
   "runs gsync (git autocommit and push) in current directory"
   (interactive)
   (shell-command "sh ~/repos/git-auto/gsync.sh")
   )
 
-;; finance
-(use-package ledger-mode
-  :ensure t
-  :init
-  (setq ledger-clear-whole-transactions 1)
-  :mode "\\.dat\\'")
+;;;; keybindings
 
-;;keybindings
 (global-set-key "\C-ca" 'org-agenda)
 (global-set-key "\C-cc" 'org-capture)
 (global-set-key "\C-cl" 'calendar)
