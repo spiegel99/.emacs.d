@@ -6,7 +6,7 @@
 Emacs is beautiful.
 
 * main use cases
-- :white_check_mark: Task and project management ([[https://orgmode.org/][Org Mode]])
+- :heavy_check_mark: Task and project management ([[https://orgmode.org/][Org Mode]])
 - :fountain_pen:  Note-taking with [[https://www.orgroam.com/][Org-roam]]
 - :heavy_dollar_sign:  Personal finance tracking with [[https://ledger-cli.org/][Ledger]] and ledger-mode
 - :computer:  Coding
