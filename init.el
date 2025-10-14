@@ -1,3 +1,5 @@
+;;;; THIS CONFIG WAS WRITTEN WITH EMACS VERSION 30.1
+
 ;; runs script that syncs my notes with git
 (start-process "update-notes" "*Messages*" "bash" "-c" "~/repos/git-auto/update-notes.sh")
 
@@ -18,6 +20,11 @@
 ;;replace yes or no by 'y' or 'n'
 (fset 'yes-or-no-p 'y-or-n-p)
 (setq visible-bell t)
+(setq electric-pair-pairs
+      '((?\{ . ?\})
+        (?\( . ?\))
+        (?\[ . ?\])
+        (?\" . ?\")))
 (electric-pair-mode 1)
 
 (set-frame-font "Iosevka Term 17" nil t)
@@ -157,6 +164,24 @@
 (use-package magit
   :custom
   (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
+
+(use-package treemacs
+  :ensure t
+  :bind
+  (("C-c t" . treemacs))
+   :hook (treemacs-mode . (lambda ()
+                           (display-line-numbers-mode 0))))
+
+(use-package treemacs-magit
+  :after (treemacs magit)
+  :ensure t)
+
+(use-package treemacs-projectile
+  :after (treemacs projectile)
+  :ensure t)
+
+;; emacs built-in auto-completion
+(global-completion-preview-mode 1)
 
 ;;;; +-----+
 ;;;; | org |
@@ -316,11 +341,11 @@
 ;use visual-line-mode for org files
 (add-hook 'org-mode-hook #'visual-line-mode)
 
-;;inhibit electric pair mode for <>
-(add-hook 'org-mode-hook (lambda ()
-           (setq-local electric-pair-inhibit-predicate
-                   `(lambda (c)
-                  (if (char-equal c ?<) t (,electric-pair-inhibit-predicate c))))))
+;; ;;inhibit electric pair mode for <>
+;; (add-hook 'org-mode-hook (lambda ()
+;;            (setq-local electric-pair-inhibit-predicate
+;;                    `(lambda (c)
+;;                   (if (char-equal c ?<) t (,electric-pair-inhibit-predicate c))))))
 
 (use-package gnuplot
   :ensure t)
