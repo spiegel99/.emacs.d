@@ -1,7 +1,7 @@
 ;;;; THIS CONFIG WAS WRITTEN WITH EMACS VERSION 30.1
 
 ;; runs script that syncs my notes with git
-(start-process "update-notes" "*Messages*" "bash" "-c" "~/repos/git-auto/update-notes.sh")
+(start-process "update-notes" "*Messages*" "bash" "-c" "~/repos/git-auto/pull-notes.sh")
 
 (setq custom-file "~/.emacs.d/custom.el")
 (load custom-file)
@@ -167,6 +167,8 @@
 
 (use-package treemacs
   :ensure t
+  :config
+  (setq treemacs-width 25)
   :bind
   (("C-c t" . treemacs))
    :hook (treemacs-mode . (lambda ()
@@ -398,6 +400,19 @@
   (shell-command "sh ~/repos/git-auto/gsync.sh")
   )
 
+(defun sync-notes()
+  "git autocommit and push my notes"
+  (interactive)
+  (shell-command "sh ~/repos/git-auto/push-notes.sh")
+  )
+
+(defun sync-notes-and-quit()
+  "sync notes and quit Emacs"
+  (interactive)
+  (save-some-buffers t)
+  (sync-notes)
+  (save-buffers-kill-emacs))
+
 ;;;; keybindings
 
 (global-set-key "\C-ca" 'org-agenda)
@@ -408,3 +423,4 @@
 (global-set-key "\C-cf" 'org-pomodoro)
 (global-set-key "\C-cs" 'specific-proj-agenda)
 (global-set-key "\C-cg" 'gsync)
+(global-set-key "\C-cx" 'sync-notes-and-quit)
