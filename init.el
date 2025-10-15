@@ -20,11 +20,6 @@
 ;;replace yes or no by 'y' or 'n'
 (fset 'yes-or-no-p 'y-or-n-p)
 (setq visible-bell t)
-(setq electric-pair-pairs
-      '((?\{ . ?\})
-        (?\( . ?\))
-        (?\[ . ?\])
-        (?\" . ?\")))
 (electric-pair-mode 1)
 
 (set-frame-font "Iosevka Term 17" nil t)
@@ -343,11 +338,11 @@
 ;use visual-line-mode for org files
 (add-hook 'org-mode-hook #'visual-line-mode)
 
-;; ;;inhibit electric pair mode for <>
-;; (add-hook 'org-mode-hook (lambda ()
-;;            (setq-local electric-pair-inhibit-predicate
-;;                    `(lambda (c)
-;;                   (if (char-equal c ?<) t (,electric-pair-inhibit-predicate c))))))
+;; ;;inhibit electric pair mode for <> for org-mode
+(add-hook 'org-mode-hook (lambda ()
+           (setq-local electric-pair-inhibit-predicate
+                   `(lambda (c)
+                  (if (char-equal c ?<) t (,electric-pair-inhibit-predicate c))))))
 
 (use-package gnuplot
   :ensure t)
@@ -411,6 +406,8 @@
   (interactive)
   (save-some-buffers t)
   (sync-notes)
+  (message "Notes synced! Quitting in 2 seconds...")
+  (sit-for 2) 
   (save-buffers-kill-emacs))
 
 ;;;; keybindings
