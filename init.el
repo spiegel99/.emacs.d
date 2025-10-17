@@ -31,9 +31,6 @@
 
 ;;send auto-save files to another directory
 (setq backup-directory-alist '(("." . "~/backup")))
-(with-eval-after-load 'tramp
-      (add-to-list 'tramp-backup-directory-alist
-		   (cons tramp-file-name-regexp nil)))
 
 (require 'package)
 
@@ -179,6 +176,17 @@
 
 ;; emacs built-in auto-completion
 (global-completion-preview-mode 1)
+
+(use-package eglot
+  :bind (("C-c e c" . eglot-reconnect)
+         ("C-c e l" . eglot)
+         ("C-c e r n" . eglot-rename)
+         ("C-c e s" . eglot-shutdown)))
+
+(add-hook 'python-mode-hook 'eglot-ensure) 
+
+;;inhibit eldoc
+(setq eldoc-echo-area-use-multiline-p nil)
 
 ;;;; +-----+
 ;;;; | org |
@@ -331,20 +339,26 @@
  'org-babel-load-languages
  '((shell . t)
    (emacs-lisp . t)
+   (python . t)
    (ditaa . t)))
 
+(setq org-babel-python-command "python3")
 ;;tells org babel where to find the ditaa.jar file
 (setq org-ditaa-jar-path "/usr/share/ditaa/ditaa.jar")
 ;use visual-line-mode for org files
 (add-hook 'org-mode-hook #'visual-line-mode)
 
-;; ;;inhibit electric pair mode for <> for org-mode
+;; ;;inhibit electric pair mode for <> in org-mode
 (add-hook 'org-mode-hook (lambda ()
            (setq-local electric-pair-inhibit-predicate
                    `(lambda (c)
                   (if (char-equal c ?<) t (,electric-pair-inhibit-predicate c))))))
 
 (use-package gnuplot
+  :ensure t)
+
+;; to visualize my site
+(use-package simple-httpd
   :ensure t)
 
 ;;;; +---------+
@@ -358,7 +372,7 @@
   :mode "\\.dat\\'")
 
 ;;;; +-------------------------------+
-;;;; | personal emacs lisps programs |
+;;;; |   personal emacs lisp code    |
 ;;;; +-------------------------------+
 
 ;; calendar

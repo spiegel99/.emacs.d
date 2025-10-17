@@ -1,26 +1,18 @@
-#+TITLE: My minimal emacs config
+#+TITLE: A minimal emacs config
 #+OPTIONS: toc:nil
 
 [[file:img/screenshot.png]]
 
 Emacs is beautiful.
 
-* main use cases
-- :heavy_check_mark: Task and project management ([[https://orgmode.org/][Org Mode]])
-- :fountain_pen:  Note-taking with [[https://www.orgroam.com/][Org-roam]]
-- :heavy_dollar_sign:  Personal finance tracking with [[https://ledger-cli.org/][Ledger]] and ledger-mode
-- :computer:  Coding
-- :page_facing_up: Technical documentation
-
 * dependencies
 - ripgrep for ~counsel-projectile-rg~
 - a C compiler for /org roam/ (like gcc)
 - cmake and libtool-bin for /vterm/
-- paplay for /org-pomodoro/ (only WSL)
+- paplay for /org-pomodoro/ (only on WSL)
 - ditaa
 - ledger
-- gnuplot for /org-plot/
 
 * notes
-Create a backup folder for backup files.
-Create custom.el file.
+- Create a backup folder and an archive.org file
+- Create custom.el file
