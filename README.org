@@ -1,8 +1,6 @@
 #+TITLE: A minimal emacs config
 #+OPTIONS: toc:nil
 
-[[file:img/screenshot.png]]
-
 Emacs is beautiful.
 
 * dependencies
@@ -14,5 +12,5 @@ Emacs is beautiful.
 - ledger
 
 * notes
-- Create a backup folder and an archive.org file
+- Create backup folder and archive.org file
 - Create custom.el file
