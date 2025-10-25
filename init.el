@@ -1,4 +1,5 @@
 ;;;;  EMACS VERSION 30.1 AT LEAST RECOMMENDED
+
 (add-to-list 'load-path '"~/.emacs.d/lisp")
 (require 'spiegel)
 ;; runs script that syncs my notes with git
@@ -25,10 +26,8 @@
 
 (set-frame-font "Iosevka Term 17" nil t)
 
-;; installed package jbeans-theme
-;; personal tweak: line 227      `(line-number ((,class (:foreground ,jbeans-grey-5 :background ,jbeans-grey-0)))) before it was 2,  removed grey separation between background and line number
-(load-theme 'jbeans t)
-;(load-theme 'modus-operandi-tinted t)
+;; installed package ujelly-theme
+(load-theme 'ujelly t)
 
 ;;send auto-save files to another directory
 (setq backup-directory-alist '(("." . "~/backup")))
@@ -54,21 +53,9 @@
 ;;;; | appearance and ui improvements |
 ;;;; +--------------------------------+
 
-(use-package dashboard
-  :ensure t
+(use-package mood-line
   :config
-    (dashboard-setup-startup-hook)
-    (setq dashboard-startup-banner "~/.emacs.d/img/onepiece.png")
-    (setq dashboard-items '((agenda . 4)
-                        (recents  . 4)))
-    (setq dashboard-banner-logo-title "good luck"))
-
-(use-package spaceline
-  :ensure t
-  :config
-  (require 'spaceline-config)
-  (setq powerline-default-separator (quote arrow))
-  (spaceline-spacemacs-theme))
+  (mood-line-mode))
 
 (use-package swiper
   :ensure t)
