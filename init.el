@@ -374,3 +374,4 @@
 (global-set-key "\C-cs" 'specific-proj-agenda)
 (global-set-key "\C-cg" 'gsync)
 (global-set-key "\C-cx" 'sync-notes-and-quit)
+(global-set-key "\C-cz" 'string-insert-rectangle)
