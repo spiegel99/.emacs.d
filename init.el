@@ -1,12 +1,12 @@
 ;;;;  EMACS VERSION 30.1 AT LEAST RECOMMENDED
-
-(add-to-list 'load-path '"~/.emacs.d/lisp")
-(require 'spiegel)
 ;; runs script that syncs my notes with git
 (start-process "update-notes" "*Messages*" "bash" "-c" "~/repos/git-auto/pull-notes.sh")
 
 (setq custom-file "~/.emacs.d/custom.el")
 (load custom-file)
+
+(add-to-list 'load-path '"~/.emacs.d/lisp")
+(require 'spiegel)
  
 ;;;; +---------------------+
 ;;;; | basic configuration |
@@ -23,6 +23,10 @@
 (fset 'yes-or-no-p 'y-or-n-p)
 (setq visible-bell t)
 (electric-pair-mode 1)
+(setq electric-pair-inhibit-predicate
+      (lambda (c)
+        (or (char-equal c ?<)
+            (electric-pair-default-inhibit c))))
 
 (set-frame-font "Iosevka Term 17" nil t)
 
@@ -174,8 +178,8 @@
 (add-hook 'python-mode-hook 'eglot-ensure) 
 
 (use-package poetry
-  :ensure t
-  :hook (python-mode . poetry-tracking-mode))
+  :ensure t)
+;  :hook (python-mode . poetry-tracking-mode))
 
 ;;inhibit eldoc
 (setq eldoc-echo-area-use-multiline-p nil)
@@ -279,6 +283,7 @@
    (setq org-pomodoro-long-break-sound "~/.emacs.d/sounds/three_beeps.wav")
    (setq org-pomodoro-finished-sound "~/.emacs.d/sounds/zelda.wav"))
 
+
 ;<s TAB to generate quickly a code block
 (require 'org-tempo)
 ;export org files to markdown
@@ -340,15 +345,6 @@
 ;use visual-line-mode for org files
 (add-hook 'org-mode-hook #'visual-line-mode)
 
-;; ;;inhibit electric pair mode for <> in org-mode
-(add-hook 'org-mode-hook (lambda ()
-           (setq-local electric-pair-inhibit-predicate
-                   `(lambda (c)
-                  (if (char-equal c ?<) t (,electric-pair-inhibit-predicate c))))))
-
-;; (use-package gnuplot
-;;   :ensure t)
-
 ;; to visualize my site
 (use-package simple-httpd
   :ensure t)
@@ -374,4 +370,4 @@
 (global-set-key "\C-cs" 'specific-proj-agenda)
 (global-set-key "\C-cg" 'gsync)
 (global-set-key "\C-cx" 'sync-notes-and-quit)
-(global-set-key "\C-cz" 'string-insert-rectangle)
+(global-set-key "\C-cy" 'poetry)

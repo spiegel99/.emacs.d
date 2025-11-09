@@ -27,18 +27,10 @@
   (let ((org-agenda-files '("~/projects/active/PRJ-0001-flat/flat.org" "~/projects/active/PRJ-0002-moving/moving.org"))) (org-agenda))
   )
 
-;; runs gsync shell command
-(defun gsync()
-  "runs gsync (git autocommit and push) in current directory"
-  (interactive)
-  (shell-command "sh ~/repos/git-auto/gsync.sh")
-  )
-
 (defun sync-notes()
   "git autocommit and push my notes"
   (interactive)
-  (shell-command "sh ~/repos/git-auto/push-notes.sh")
-  )
+  (shell-command "sh ~/repos/git-auto/push-notes.sh"))
 
 (defun sync-notes-and-quit()
   "sync notes and quit Emacs"
