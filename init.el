@@ -1,6 +1,4 @@
 ;;;;  EMACS VERSION 30.1 AT LEAST RECOMMENDED
-;; runs script that syncs my notes with git
-(start-process "update-notes" "*Messages*" "bash" "-c" "~/repos/git-auto/pull-notes.sh")
 
 (setq custom-file "~/.emacs.d/custom.el")
 (load custom-file)
@@ -258,8 +256,14 @@
 	("nn" "note" entry (file "~/orgfiles/refile.org")
 	 "* %?")
         ("nl" "note with link" entry (file "~/orgfiles/refile.org")
-         "* %?\n  %a\n  %i")
+         "* %?\n  %a\n  %i") 
 
+	("b" "blog idea")
+	("bb" "blog post idea" entry (file "~/repos/blog/ideas.org")
+	 "* %?")
+        ("bl" "blog post idea with link" entry (file "~/repos/blog/ideas.org")
+         "* %?\n  %a\n  %i")
+	
 	("e" "event")
 	("ee" "add event" entry (file "~/orgfiles/events.org")
 	 "* %? :event:")
@@ -368,6 +372,6 @@
 (global-set-key "\C-cd" 'copy-from-above-command)
 (global-set-key "\C-cf" 'org-pomodoro)
 (global-set-key "\C-cs" 'specific-proj-agenda)
-(global-set-key "\C-cg" 'gsync)
-(global-set-key "\C-cx" 'sync-notes-and-quit)
 (global-set-key "\C-cy" 'poetry)
+(global-set-key "\C-cz" 'string-insert-rectangle)
+(global-set-key "\C-cr" 'counsel-projectile-rg)

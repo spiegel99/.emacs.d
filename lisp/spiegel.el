@@ -27,18 +27,4 @@
   (let ((org-agenda-files '("~/projects/active/PRJ-0001-flat/flat.org" "~/projects/active/PRJ-0002-moving/moving.org"))) (org-agenda))
   )
 
-(defun sync-notes()
-  "git autocommit and push my notes"
-  (interactive)
-  (shell-command "sh ~/repos/git-auto/push-notes.sh"))
-
-(defun sync-notes-and-quit()
-  "sync notes and quit Emacs"
-  (interactive)
-  (save-some-buffers t)
-  (sync-notes)
-  (message "Notes synced! Quitting in 2 seconds...")
-  (sit-for 2) 
-  (save-buffers-kill-emacs))
-
 (provide 'spiegel)
