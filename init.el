@@ -28,7 +28,6 @@
 
 (set-frame-font "Iosevka Term 17" nil t)
 
-;; installed package ujelly-theme
 (load-theme 'ujelly t)
 
 ;;send auto-save files to another directory
@@ -278,11 +277,11 @@
   (add-hook 'org-mode-hook (lambda ()
                              (org-bullets-mode 1)))) 
 
-;use aplay or install paplay
+;install paplay (for wsl)
 (use-package org-pomodoro
    :commands org-pomodoro
    :config
-   (setq org-pomodoro-audio-player "/usr/bin/paplay")
+;   (setq org-pomodoro-audio-player "/usr/bin/aplay")
    (setq org-pomodoro-short-break-sound "~/.emacs.d/sounds/three_beeps.wav")
    (setq org-pomodoro-long-break-sound "~/.emacs.d/sounds/three_beeps.wav")
    (setq org-pomodoro-finished-sound "~/.emacs.d/sounds/zelda.wav"))
@@ -362,6 +361,9 @@
   :init
   (setq ledger-clear-whole-transactions 1)
   :mode "\\.dat\\'")
+
+(use-package htmlize
+  :ensure t)
 
 ;;;; keybindings
 

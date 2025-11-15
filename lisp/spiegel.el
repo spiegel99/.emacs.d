@@ -24,7 +24,7 @@
 (defun specific-proj-agenda()
   "lauch org-agenda for project file"
   (interactive)
-  (let ((org-agenda-files '("~/projects/active/PRJ-0001-flat/flat.org" "~/projects/active/PRJ-0002-moving/moving.org"))) (org-agenda))
+  (let ((org-agenda-files '("~/projects/active/PRJ-0001-flat/flat.org"))) (org-agenda))
   )
 
 (provide 'spiegel)

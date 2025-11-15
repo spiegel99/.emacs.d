@@ -12,5 +12,6 @@ Emacs is beautiful.
 - ledger
 
 * notes
-- Create backup folder and archive.org file
-- Create custom.el file
+- Create =~/backup= folder and =~/backup/archive.org=
+- Create =~/.emacs.d/custom.el file in ~.emacs.d~
+- Copy or create ~/notes folder
