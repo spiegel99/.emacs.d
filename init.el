@@ -28,7 +28,10 @@
 
 (set-frame-font "Iosevka Term 17" nil t)
 
-(load-theme 'ujelly t)
+(use-package doom-themes
+  :ensure t
+  :config
+  (load-theme 'doom-tomorrow-night t))
 
 ;;send auto-save files to another directory
 (setq backup-directory-alist '(("." . "~/backup")))
@@ -172,7 +175,7 @@
          ("C-c e r n" . eglot-rename)
          ("C-c e s" . eglot-shutdown)))
 
-(add-hook 'python-mode-hook 'eglot-ensure) 
+;(add-hook 'python-mode-hook 'eglot-ensure) 
 
 (use-package poetry
   :ensure t)
@@ -281,7 +284,7 @@
 (use-package org-pomodoro
    :commands org-pomodoro
    :config
-;   (setq org-pomodoro-audio-player "/usr/bin/aplay")
+;   (setq org-pomodoro-audio-player "/usr/bin/paplay")
    (setq org-pomodoro-short-break-sound "~/.emacs.d/sounds/three_beeps.wav")
    (setq org-pomodoro-long-break-sound "~/.emacs.d/sounds/three_beeps.wav")
    (setq org-pomodoro-finished-sound "~/.emacs.d/sounds/zelda.wav"))
@@ -348,10 +351,6 @@
 ;use visual-line-mode for org files
 (add-hook 'org-mode-hook #'visual-line-mode)
 
-;; to visualize my site
-(use-package simple-httpd
-  :ensure t)
-
 ;;;; +---------+
 ;;;; | finance |
 ;;;; +---------+
@@ -361,6 +360,14 @@
   :init
   (setq ledger-clear-whole-transactions 1)
   :mode "\\.dat\\'")
+
+;;;; +-----+
+;;;; | doc |
+;;;; +-----+
+
+;; to visualize my site
+(use-package simple-httpd
+  :ensure t)
 
 (use-package htmlize
   :ensure t)
