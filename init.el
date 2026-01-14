@@ -156,7 +156,8 @@
   :bind
   (("C-c t" . treemacs))
    :hook (treemacs-mode . (lambda ()
-                           (display-line-numbers-mode 0))))
+                            (display-line-numbers-mode 0)
+			    (setq mode-line-format nil))))
 
 (use-package treemacs-magit
   :after (treemacs magit)
@@ -195,9 +196,9 @@
   (setq org-log-into-drawer t)
   (setq org-adapt-indentation t)
   (setq org-agenda-files
-	'("~/orgfiles/todo.org"
-	  "~/orgfiles/events.org"
-	  "~/orgfiles/agenda.org"))
+	'("~/sync/orgfiles/todo.org"
+	  "~/sync/orgfiles/events.org"
+	  "~/sync/orgfiles/agenda.org"))
   (setq org-agenda-inhibit-startup t)
   (require 'org-habit)
    (add-to-list 'org-modules 'org-habit)
@@ -237,27 +238,27 @@
   ;; Define Org Capture templates
   (setq org-capture-templates
       '(("t" "task")
-        ("tt" "task" entry (file "~/orgfiles/todo.org")
+        ("tt" "task" entry (file "~/sync/orgfiles/todo.org")
          "* TODO %?")
-        ("tl" "task with link" entry (file "~/orgfiles/todo.org")
+        ("tl" "task with link" entry (file "~/sync/orgfiles/todo.org")
          "* TODO %?\n  %a\n  %i")
 	
 	("l" "ledger entry")	
 	("lc" "paiement CE VISA" plain
-                (file "~/finance/2025/journal.dat")
+                (file "~/sync/ledger/2025/journal.dat")
 	        "%(org-read-date) * %^{Payee} 
   expenses:%^{Account}  %^{Amount} EUR
   liabilities:CEbank:visa")
 	("ld" "debit differe" plain
-                (file "~/finance/2025/journal.dat")
+                (file "~/sync/ledger/2025/journal.dat")
 	        "%(org-read-date) * debit differe 
   liabilities:CEbank:visa  %^{Amount} EUR
   assets:CEbank:compte")
 
 	("n" "quick note")
-	("nn" "note" entry (file "~/orgfiles/refile.org")
+	("nn" "note" entry (file "~/sync/orgfiles/refile.org")
 	 "* %?")
-        ("nl" "note with link" entry (file "~/orgfiles/refile.org")
+        ("nl" "note with link" entry (file "~/sync/orgfiles/refile.org")
          "* %?\n  %a\n  %i") 
 
 	("b" "blog idea")
@@ -265,13 +266,19 @@
 	 "* %?")
         ("bl" "blog post idea with link" entry (file "~/repos/blog/ideas.org")
          "* %?\n  %a\n  %i")
+
+	("w" "watchlist")
+	("wm" "add movie to watchlist" entry (file+olp "~/sync/orgfiles/watchlist.org" "movies")
+         "* TOWATCH %?")
+	("ws" "add show to watchlist" entry (file+olp "~/sync/orgfiles/watchlist.org" "shows")
+         "* TOWATCH %?")
 	
 	("e" "event")
-	("ee" "add event" entry (file "~/orgfiles/events.org")
+	("ee" "add event" entry (file "~/sync/orgfiles/events.org")
 	 "* %? :event:")
 	
 	("a" "agenda")
-	("aa" "add item in agenda" entry (file "~/orgfiles/agenda.org")
+	("aa" "add item in agenda" entry (file "~/sync/orgfiles/agenda.org")
 	 "* %?"))))
 
 (use-package org-bullets
@@ -280,7 +287,6 @@
   (add-hook 'org-mode-hook (lambda ()
                              (org-bullets-mode 1)))) 
 
-;install paplay (for wsl)
 (use-package org-pomodoro
    :commands org-pomodoro
    :config
@@ -319,14 +325,18 @@
       ("b" "book" plain
       (file "~/.emacs.d/templates/book_note_template.org")
       :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
+      :unnarrowed t)
+      ("t" "tea" plain
+      (file "~/.emacs.d/templates/tea_template.org")
+      :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
       :unnarrowed t)))
   :bind
   (("C-c n f" . org-roam-node-find)
    ("C-c n g" . org-roam-graph)
    ("C-c n i" . org-roam-node-insert)
-;   ("C-c n c" . org-roam-capture)
    ("C-c n l" . org-roam-buffer-toggle)
-         ;; Dailies
+   ;; Dailies
+   ("C-c n d" . org-roam-dailies-goto-date)
    ("C-c n j" . org-roam-dailies-capture-today))
   :config
   (setq org-roam-node-display-template (concat "${title:*} " (propertize "${tags:10}" 'face 'org-tag)))
@@ -380,7 +390,6 @@
 (global-set-key "\C-cv" 'visual-line-mode)
 (global-set-key "\C-cd" 'copy-from-above-command)
 (global-set-key "\C-cf" 'org-pomodoro)
-(global-set-key "\C-cs" 'specific-proj-agenda)
 (global-set-key "\C-cy" 'poetry)
 (global-set-key "\C-cz" 'string-insert-rectangle)
 (global-set-key "\C-cr" 'counsel-projectile-rg)

@@ -1,0 +1,16 @@
+#+filetags: :tea:
+* metadata
+** name
+   ${title}
+** type
+   %^{type}
+** country
+   %^{country}
+** keywords
+   %^{keywords}
+
+* notes
+
+  %?
+
+* rating
