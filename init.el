@@ -198,7 +198,10 @@
   (setq org-agenda-files
 	'("~/sync/orgfiles/todo.org"
 	  "~/sync/orgfiles/events.org"
-	  "~/sync/orgfiles/agenda.org"))
+	  "~/sync/orgfiles/agenda.org"
+	  "~/sync/orgfiles/watchlist.org"
+	  "~/sync/projects/active/PRJ-0004-civilengineering/ceng.org"
+	  "~/sync/projects/active/PRJ-0001-flat/flat.org"))
   (setq org-agenda-inhibit-startup t)
   (require 'org-habit)
    (add-to-list 'org-modules 'org-habit)
@@ -245,7 +248,7 @@
 	
 	("l" "ledger entry")	
 	("lc" "paiement CE VISA" plain
-                (file "~/sync/ledger/2025/journal.dat")
+                (file "~/sync/ledger/2026/journal.dat")
 	        "%(org-read-date) * %^{Payee} 
   expenses:%^{Account}  %^{Amount} EUR
   liabilities:CEbank:visa")

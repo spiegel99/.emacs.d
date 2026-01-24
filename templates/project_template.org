@@ -1,0 +1,53 @@
+#+TITLE: PRJ-XXXX Nom du projet
+#+COLUMNS: %35ITEM(Task) %TODO(State) %5Effort(Estimated [days]){:} %SCHEDULED %DEADLINE %CLOSED %CLOCKSUM(Clocked) %CLOCKSUM_T(Today)
+
+Generate ID of WBS header with ~org-id-get-create~ and copy link under the reporting section.
+
+Useful links:
+
+* Reporting
+
+** overview
+  #+begin: columnview :hlines 2 :skip-empty-rows "t" :indent "t" :id "35894f72-c07a-4a0a-ae86-d843be3118a0"
+  | <35>          |       | <5>              |           |          |        |         |       |
+  | Task          | State | Estimated [days] | SCHEDULED | DEADLINE | CLOSED | Clocked | Today |
+  |---------------+-------+------------------+-----------+----------+--------+---------+-------|
+  | \_  Task 1    | TODO  |                  |           |          |        |         |       |
+  | \_    Subtask | TODO  |                  |           |          |        |         |       |
+  |---------------+-------+------------------+-----------+----------+--------+---------+-------|
+  | \_  Task 2    | TODO  |                  |           |          |        |         |       |
+  |---------------+-------+------------------+-----------+----------+--------+---------+-------|
+  | \_  Task 3    | TODO  |                  |           |          |        |         |       |
+  #+end
+  
+** time reports
+
+*** overall summary
+    #+BEGIN: clocktable :link t :formula %
+    #+CAPTION: Clock summary at [2025-11-11 Tue 22:25]
+    | Headline     | Time   |   % |
+    |--------------+--------+-----|
+    | *Total time* | *0:00* | 0.0 |
+    #+END
+    
+*** weekly report
+    #+BEGIN: clocktable :tstart "<-1w>" :tend "<now>" :compact t :maxlevel 3
+    #+CAPTION: Clock summary at [2025-11-11 Tue 22:25]
+    | Headline     | Time   |
+    |--------------+--------|
+    | *Total time* | *0:00* |
+    #+END
+
+*** daily report
+    #+BEGIN: clocktable :tstart "<-1d>" :tend "<now>" :compact t :maxlevel 3
+    #+CAPTION: Clock summary at [2025-11-11 Tue 22:25]
+    | Headline     | Time   |
+    |--------------+--------|
+    | *Total time* | *0:00* |
+    #+END
+    
+* WBS
+** TODO Task 1
+*** TODO Subtask
+** TODO Task 2
+** TODO Task 3

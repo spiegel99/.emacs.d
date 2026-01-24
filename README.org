@@ -14,4 +14,4 @@ Emacs is beautiful.
 * notes
 - Create =~/backup/= folder and =~/backup/archive.org=
 - Create =~/.emacs.d/custom.el=
-- Copy or create =~/notes= folder
+- Copy or create =~/notes/= folder
