@@ -28,10 +28,12 @@
 
 (set-frame-font "Iosevka Term 17" nil t)
 
-(use-package doom-themes
-  :ensure t
-  :config
-  (load-theme 'doom-tomorrow-night t))
+;; (use-package doom-themes
+;;   :ensure t
+;;   :config
+;;   (load-theme 'doom-spacegrey t))
+
+(load-theme 'ujelly t)
 
 ;;send auto-save files to another directory
 (setq backup-directory-alist '(("." . "~/backup")))
@@ -200,6 +202,7 @@
 	  "~/sync/orgfiles/events.org"
 	  "~/sync/orgfiles/agenda.org"
 	  "~/sync/orgfiles/watchlist.org"
+	  "~/sync/orgfiles/tracker.org"
 	  "~/sync/projects/active/PRJ-0004-civilengineering/ceng.org"
 	  "~/sync/projects/active/PRJ-0001-flat/flat.org"))
   (setq org-agenda-inhibit-startup t)
@@ -279,7 +282,23 @@
 	("e" "event")
 	("ee" "add event" entry (file "~/sync/orgfiles/events.org")
 	 "* %? :event:")
-	
+
+	("s" "sport tracker")
+	("sb" "biceps" table-line (file+headline "~/sync/orgfiles/sport.org" "biceps")
+	 "| %U | %^{exo} | %^{reps} | %^{weight} kg |" :kill-buffer t)
+	("sc" "chest" table-line (file+headline "~/sync/orgfiles/sport.org" "chest")
+	 "| %U | %^{exo} | %^{reps} | %^{weight} kg |" :kill-buffer t)
+	("sl" "legs" table-line (file+headline "~/sync/orgfiles/sport.org" "legs")
+	 "| %U | %^{exo} | %^{reps} | %^{weight} kg |" :kill-buffer t)
+	("sa" "abs" table-line (file+headline "~/sync/orgfiles/sport.org" "abs")
+	 "| %U | %^{exo} | %^{reps} | %^{weight} kg |" :kill-buffer t)
+	("ss" "shoulders" table-line (file+headline "~/sync/orgfiles/sport.org" "shoulders")
+	 "| %U | %^{exo} | %^{reps} | %^{weight} kg |" :kill-buffer t)
+	("sk" "back" table-line (file+headline "~/sync/orgfiles/sport.org" "back")
+	 "| %U | %^{exo} | %^{reps} | %^{weight} kg |" :kill-buffer t)
+	("st" "triceps" table-line (file+headline "~/sync/orgfiles/sport.org" "triceps")
+	 "| %U | %^{exo} | %^{reps} | %^{weight} kg |" :kill-buffer t)
+      
 	("a" "agenda")
 	("aa" "add item in agenda" entry (file "~/sync/orgfiles/agenda.org")
 	 "* %?"))))

@@ -28,9 +28,9 @@
   (let ((org-agenda-files '("~/sync/orgfiles/tracker.org"))) (org-agenda))
   )
 
-(defun current-week()
-  "write current week for my meeting notes index"
+(defun current-week ()
+  "Insert current ISO week for meeting notes index."
   (interactive)
-  (insert (shell-command-to-string "date +'* week %V of %Y'")))
+  (insert (format-time-string "* week %V of %Y - %d/%m")))
 
 (provide 'spiegel)
