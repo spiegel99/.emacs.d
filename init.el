@@ -198,13 +198,13 @@
   (setq org-log-into-drawer t)
   (setq org-adapt-indentation t)
   (setq org-agenda-files
-	'("~/sync/orgfiles/todo.org"
-	  "~/sync/orgfiles/events.org"
-	  "~/sync/orgfiles/agenda.org"
-	  "~/sync/orgfiles/watchlist.org"
-	  "~/sync/orgfiles/tracker.org"
-	  "~/sync/projects/active/PRJ-0004-civilengineering/ceng.org"
-	  "~/sync/projects/active/PRJ-0001-flat/flat.org"))
+	(append
+	 '("~/sync/orgfiles/todo.org"
+           "~/sync/orgfiles/events.org"
+           "~/sync/orgfiles/agenda.org"
+           "~/sync/orgfiles/watchlist.org"
+           "~/sync/orgfiles/tracker.org")
+	 (directory-files-recursively "~/sync/projects/active" "\\.org$")))
   (setq org-agenda-inhibit-startup t)
   (require 'org-habit)
    (add-to-list 'org-modules 'org-habit)
@@ -212,9 +212,9 @@
   (setq org-habit-show-habits-only-for-today nil)
 
   (setq org-todo-keywords
-	'((sequence "TODO(t)" "ONHOLD(h)" "DOCUMENT(w)" "DOING(a)" "|" "DONE(d)" "CANC(c)")))
+	'((sequence "TODO(t)" "HOLD(h)" "DOC(w)" "DOING(a)" "|" "DONE(d)" "CANC(c)")))
   (setq org-todo-keyword-faces
-        '(("DOING" . "orange") ("ONHOLD" . "grey") ("DOCUMENT" . "red")))
+        '(("DOING" . "orange") ("HOLD" . "grey") ("DOC" . "red")))
   (setq org-refile-targets
 	'(("~/backup/archive.org" :maxlevel . 1)))
   ;; Save Org buffers after refiling
@@ -226,13 +226,13 @@
      ((todo "TODO"
             ((org-agenda-overriding-header "BACKLOG")
              (org-agenda-files org-agenda-files)))
-      (todo "ONHOLD"
+      (todo "HOLD"
             ((org-agenda-overriding-header "ON HOLD")
              (org-agenda-files org-agenda-files)))
       (todo "DOING"
             ((org-agenda-overriding-header "IN PROGRESS")
              (org-agenda-files org-agenda-files)))
-      (todo "DOCUMENT"
+      (todo "DOC"
             ((org-agenda-overriding-header "WRITE DOCUMENTATION")
              (org-agenda-files org-agenda-files)))
       (todo "DONE"
@@ -285,19 +285,19 @@
 
 	("s" "sport tracker")
 	("sb" "biceps" table-line (file+headline "~/sync/orgfiles/sport.org" "biceps")
-	 "| %U | %^{exo} | %^{reps} | %^{weight} kg |" :kill-buffer t)
+	 "| %U | %^{week number} | %^{exo} | %^{reps} | %^{weight} kg |" :kill-buffer t)
 	("sc" "chest" table-line (file+headline "~/sync/orgfiles/sport.org" "chest")
-	 "| %U | %^{exo} | %^{reps} | %^{weight} kg |" :kill-buffer t)
+	 "| %U | %^{week number} | %^{exo} | %^{reps} | %^{weight} kg |" :kill-buffer t)
 	("sl" "legs" table-line (file+headline "~/sync/orgfiles/sport.org" "legs")
-	 "| %U | %^{exo} | %^{reps} | %^{weight} kg |" :kill-buffer t)
+	 "| %U | %^{week number} | %^{exo} | %^{reps} | %^{weight} kg |" :kill-buffer t)
 	("sa" "abs" table-line (file+headline "~/sync/orgfiles/sport.org" "abs")
-	 "| %U | %^{exo} | %^{reps} | %^{weight} kg |" :kill-buffer t)
+	 "| %U | %^{week number} | %^{exo} | %^{reps} | %^{weight} kg |" :kill-buffer t)
 	("ss" "shoulders" table-line (file+headline "~/sync/orgfiles/sport.org" "shoulders")
-	 "| %U | %^{exo} | %^{reps} | %^{weight} kg |" :kill-buffer t)
+	 "| %U | %^{week number} | %^{exo} | %^{reps} | %^{weight} kg |" :kill-buffer t)
 	("sk" "back" table-line (file+headline "~/sync/orgfiles/sport.org" "back")
-	 "| %U | %^{exo} | %^{reps} | %^{weight} kg |" :kill-buffer t)
+	 "| %U | %^{week number} | %^{exo} | %^{reps} | %^{weight} kg |" :kill-buffer t)
 	("st" "triceps" table-line (file+headline "~/sync/orgfiles/sport.org" "triceps")
-	 "| %U | %^{exo} | %^{reps} | %^{weight} kg |" :kill-buffer t)
+	 "| %U | %^{week number} | %^{exo} | %^{reps} | %^{weight} kg |" :kill-buffer t)
       
 	("a" "agenda")
 	("aa" "add item in agenda" entry (file "~/sync/orgfiles/agenda.org")
@@ -322,6 +322,11 @@
 (require 'org-tempo)
 ;export org files to markdown
 (require 'ox-md)
+
+;; tells Org about the letter class
+(with-eval-after-load 'ox-latex
+  (add-to-list 'org-latex-classes '("letter" "\\documentclass{letter}"))
+  )
 
 ;;org roam
 ;;might need to install a c compiler [see doc]
@@ -382,6 +387,9 @@
 (setq org-ditaa-jar-path "/usr/share/ditaa/ditaa.jar")
 ;use visual-line-mode for org files
 (add-hook 'org-mode-hook #'visual-line-mode)
+
+(use-package org-ql
+  :ensure t)
 
 ;;;; +---------+
 ;;;; | finance |

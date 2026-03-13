@@ -20,7 +20,6 @@
   (highlight-scheduled-days "~/sync/orgfiles/events.org" 'busy-1 month year indent))
 
 ;; launch agenda for specific org file
-;; easier to maintain because the target file can change or not be present (depending on the device I use). If the file was added to org-agenda-files, it would generate an error for the typical org-agenda/dashboard.
 
 (defun tracker-agenda()
   "lauch org-agenda to track my habits"
@@ -32,5 +31,14 @@
   "Insert current ISO week for meeting notes index."
   (interactive)
   (insert (format-time-string "* week %V of %Y - %d/%m")))
+
+(defun stuck-projects ()
+  "Show DOING tasks with no clock activity in the last 14 days."
+  (interactive)
+  (org-ql-search
+    (org-agenda-files)
+    '(and (todo "DOING")
+          (not (clocked :from -14)))
+    :title "Stuck projects (no activity in 14 days)"))
 
 (provide 'spiegel)
