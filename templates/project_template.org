@@ -1,5 +1,5 @@
 #+TITLE: PRJ-XXXX Nom du projet
-#+COLUMNS: %35ITEM(Task) %TODO(State) %5Effort(Estimated [days]){:} %SCHEDULED %DEADLINE %CLOSED %CLOCKSUM(Clocked) %CLOCKSUM_T(Today)
+#+COLUMNS: %35ITEM(Task) %TODO(State) %5Effort(Estimated [min]){:} %SCHEDULED %DEADLINE %CLOSED %CLOCKSUM(Clocked) %CLOCKSUM_T(Today)
 
 Generate ID of WBS header with ~org-id-get-create~ and copy link under the reporting section.
 

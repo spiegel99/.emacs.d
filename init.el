@@ -256,7 +256,7 @@
   expenses:%^{Account}  %^{Amount} EUR
   liabilities:CEbank:visa")
 	("ld" "debit differe" plain
-                (file "~/sync/ledger/2025/journal.dat")
+                (file "~/sync/ledger/2026/journal.dat")
 	        "%(org-read-date) * debit differe 
   liabilities:CEbank:visa  %^{Amount} EUR
   assets:CEbank:compte")
@@ -291,7 +291,7 @@
 	("sl" "legs" table-line (file+headline "~/sync/orgfiles/sport.org" "legs")
 	 "| %U | %^{week number} | %^{exo} | %^{reps} | %^{weight} kg |" :kill-buffer t)
 	("sa" "abs" table-line (file+headline "~/sync/orgfiles/sport.org" "abs")
-	 "| %U | %^{week number} | %^{exo} | %^{reps} | %^{weight} kg |" :kill-buffer t)
+	 "| %U | %^{week number} | %^{exo} | %^{reps} | %^{time} s |" :kill-buffer t)
 	("ss" "shoulders" table-line (file+headline "~/sync/orgfiles/sport.org" "shoulders")
 	 "| %U | %^{week number} | %^{exo} | %^{reps} | %^{weight} kg |" :kill-buffer t)
 	("sk" "back" table-line (file+headline "~/sync/orgfiles/sport.org" "back")
@@ -316,7 +316,6 @@
    (setq org-pomodoro-short-break-sound "~/.emacs.d/sounds/three_beeps.wav")
    (setq org-pomodoro-long-break-sound "~/.emacs.d/sounds/three_beeps.wav")
    (setq org-pomodoro-finished-sound "~/.emacs.d/sounds/zelda.wav"))
-
 
 ;<s TAB to generate quickly a code block
 (require 'org-tempo)
