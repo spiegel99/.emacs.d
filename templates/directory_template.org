@@ -1,0 +1,8 @@
+#+filetags: :directory:
+
+* role
+  ${fonction}
+* mail
+  ${email}
+* numero
+  ${num}

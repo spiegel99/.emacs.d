@@ -19,13 +19,8 @@
   (highlight-scheduled-days "~/sync/orgfiles/agenda.org" 'busy-2 month year indent)
   (highlight-scheduled-days "~/sync/orgfiles/events.org" 'busy-1 month year indent))
 
-;; launch agenda for specific org file
 
-(defun tracker-agenda()
-  "lauch org-agenda to track my habits"
-  (interactive)
-  (let ((org-agenda-files '("~/sync/orgfiles/tracker.org"))) (org-agenda))
-  )
+;; productivity workflow
 
 (defun current-week ()
   "Insert current ISO week for meeting notes index."
@@ -33,12 +28,25 @@
   (insert (format-time-string "* week %V of %Y - %d/%m")))
 
 (defun stuck-projects ()
-  "Show DOING tasks with no clock activity in the last 14 days."
+  "Show active tasks with no clock activity in the last 14 days."
   (interactive)
   (org-ql-search
     (org-agenda-files)
-    '(and (todo "DOING")
+    '(and (todo "PROG")
           (not (clocked :from -14)))
     :title "Stuck projects (no activity in 14 days)"))
+
+(defun my-projects ()
+  (interactive)
+  (let* ((proj
+          (seq-uniq
+           (org-ql-select (org-agenda-files)
+             '(property "PROJECT")
+             :action '(org-entry-get (point) "PROJECT"))))
+         (cat (completing-read "Project: " proj)))
+    (org-ql-search (org-agenda-files)
+      `(and (todo "TODO" "PROG" "HOLD" "DOC")
+            (property "PROJECT" ,cat :inherit t))
+      :title (format "Project: %s" cat))))
 
 (provide 'spiegel)

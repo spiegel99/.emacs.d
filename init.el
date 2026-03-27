@@ -26,7 +26,7 @@
         (or (char-equal c ?<)
             (electric-pair-default-inhibit c))))
 
-(set-frame-font "Iosevka Term 17" nil t)
+(set-frame-font "Iosevka Term 16" nil t)
 
 ;; (use-package doom-themes
 ;;   :ensure t
@@ -34,7 +34,7 @@
 ;;   (load-theme 'doom-spacegrey t))
 
 (load-theme 'ujelly t)
-
+  
 ;;send auto-save files to another directory
 (setq backup-directory-alist '(("." . "~/backup")))
 
@@ -212,9 +212,9 @@
   (setq org-habit-show-habits-only-for-today nil)
 
   (setq org-todo-keywords
-	'((sequence "TODO(t)" "HOLD(h)" "DOC(w)" "DOING(a)" "|" "DONE(d)" "CANC(c)")))
+	'((sequence "TODO(t)" "HOLD(h)" "DOC(w)" "PROG(p)" "|" "DONE(d)" "CANC(c)")))
   (setq org-todo-keyword-faces
-        '(("DOING" . "orange") ("HOLD" . "grey") ("DOC" . "red")))
+        '(("PROG" . "orange") ("HOLD" . "grey") ("DOC" . "red")))
   (setq org-refile-targets
 	'(("~/backup/archive.org" :maxlevel . 1)))
   ;; Save Org buffers after refiling
@@ -229,7 +229,7 @@
       (todo "HOLD"
             ((org-agenda-overriding-header "ON HOLD")
              (org-agenda-files org-agenda-files)))
-      (todo "DOING"
+      (todo "PROG"
             ((org-agenda-overriding-header "IN PROGRESS")
              (org-agenda-files org-agenda-files)))
       (todo "DOC"
@@ -352,6 +352,10 @@
       (file "~/.emacs.d/templates/book_note_template.org")
       :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
       :unnarrowed t)
+       ("a" "annuaire/directory" plain
+      (file "~/.emacs.d/templates/directory_template.org")
+      :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
+      :unnarrowed t)
       ("t" "tea" plain
       (file "~/.emacs.d/templates/tea_template.org")
       :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
@@ -422,3 +426,5 @@
 (global-set-key "\C-cy" 'poetry)
 (global-set-key "\C-cz" 'string-insert-rectangle)
 (global-set-key "\C-cr" 'counsel-projectile-rg)
+(global-set-key "\C-cs" 'stuck-projects)
+(global-set-key "\C-cm" 'my-projects)
