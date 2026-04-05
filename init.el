@@ -187,6 +187,10 @@
 ;;inhibit eldoc
 (setq eldoc-echo-area-use-multiline-p nil)
 
+;;install sbcl
+(use-package sly
+  :ensure t)
+
 ;;;; +-----+
 ;;;; | org |
 ;;;; +-----+

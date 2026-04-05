@@ -28,13 +28,13 @@
   (insert (format-time-string "* week %V of %Y - %d/%m")))
 
 (defun stuck-projects ()
-  "Show active tasks with no clock activity in the last 14 days."
+  "Show active tasks with no clock activity in the last 10 days."
   (interactive)
   (org-ql-search
     (org-agenda-files)
     '(and (todo "PROG")
-          (not (clocked :from -14)))
-    :title "Stuck projects (no activity in 14 days)"))
+          (not (clocked :from -10)))
+    :title "Stuck projects (no activity in 10 days)"))
 
 (defun my-projects ()
   (interactive)
