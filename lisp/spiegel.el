@@ -1,6 +1,6 @@
 ;; -*- lexical-binding: t; -*-
 
-;;calendar
+;;;; calendar
 (defface busy-1 '((t :foreground "white" :background "#607d8b")) "")
 (defface busy-2 '((t :foreground "black" :background "white")) "")
 
@@ -20,7 +20,7 @@
   (highlight-scheduled-days "~/sync/orgfiles/events.org" 'busy-1 month year indent))
 
 
-;; productivity workflow
+;;;; productivity workflow
 
 (defun current-week ()
   "Insert current ISO week for meeting notes index."
@@ -48,5 +48,10 @@
       `(and (todo "TODO" "PROG" "HOLD" "DOC")
             (property "PROJECT" ,cat :inherit t))
       :title (format "Project: %s" cat))))
+
+(defun orgfiles ()
+  (interactive)
+  (dired "~/sync/orgfiles")
+  (message "opened orgfiles directory"))
 
 (provide 'spiegel)

@@ -33,7 +33,7 @@
 ;;   :config
 ;;   (load-theme 'doom-spacegrey t))
 
-(load-theme 'ujelly t)
+(load-theme 'doom-gruvbox t)
   
 ;;send auto-save files to another directory
 (setq backup-directory-alist '(("." . "~/backup")))
@@ -254,11 +254,6 @@
          "* TODO %?\n  %a\n  %i")
 	
 	("l" "ledger entry")	
-	("lc" "paiement CE VISA" plain
-                (file "~/sync/ledger/2026/journal.dat")
-	        "%(org-read-date) * %^{Payee} 
-  expenses:%^{Account}  %^{Amount} EUR
-  liabilities:CEbank:visa")
 	("ld" "debit differe" plain
                 (file "~/sync/ledger/2026/journal.dat")
 	        "%(org-read-date) * debit differe 
@@ -406,6 +401,7 @@
   :ensure t
   :init
   (setq ledger-clear-whole-transactions 1)
+  (setq ledger-default-date-format "%Y-%m-%d")
   :mode "\\.dat\\'")
 
 ;;;; +-----+
@@ -432,3 +428,5 @@
 (global-set-key "\C-cr" 'counsel-projectile-rg)
 (global-set-key "\C-cs" 'stuck-projects)
 (global-set-key "\C-cm" 'my-projects)
+(global-set-key "\C-cu" 'org-update-all-dblocks)
+(global-set-key "\C-co" 'orgfiles)
