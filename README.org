@@ -7,9 +7,9 @@ Emacs is beautiful.
 - ripgrep for ~counsel-projectile-rg~
 - a C compiler for /org roam/ (like gcc)
 - cmake and libtool-bin for /vterm/
-- paplay for /org-pomodoro/ (only on WSL)
 - ditaa
 - ledger
+- sbcl
 
 * notes
 - Create =~/backup/= folder and =~/backup/archive.org=
