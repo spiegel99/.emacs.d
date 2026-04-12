@@ -33,7 +33,7 @@
 ;;   :config
 ;;   (load-theme 'doom-spacegrey t))
 
-(load-theme 'doom-gruvbox t)
+(load-theme 'ujelly t)
   
 ;;send auto-save files to another directory
 (setq backup-directory-alist '(("." . "~/backup")))
@@ -206,8 +206,7 @@
 	 '("~/sync/orgfiles/todo.org"
            "~/sync/orgfiles/events.org"
            "~/sync/orgfiles/agenda.org"
-           "~/sync/orgfiles/watchlist.org"
-           "~/sync/orgfiles/tracker.org")
+           "~/sync/orgfiles/watchlist.org")
 	 (directory-files-recursively "~/sync/projects/active" "\\.org$")))
   (setq org-agenda-inhibit-startup t)
   (require 'org-habit)
@@ -273,10 +272,10 @@
          "* %?\n  %a\n  %i")
 
 	("w" "watchlist")
-	("wm" "add movie to watchlist" entry (file+olp "~/sync/orgfiles/watchlist.org" "movies")
-         "* TOWATCH %?")
-	("ws" "add show to watchlist" entry (file+olp "~/sync/orgfiles/watchlist.org" "shows")
-         "* TOWATCH %?")
+	("wm" "add movie to watchlist" entry (file "~/sync/orgfiles/watchlist.org")
+         "* TOWATCH %? :movie:")
+	("ws" "add show to watchlist" entry (file "~/sync/orgfiles/watchlist.org")
+         "* TOWATCH %? :show:")
 	
 	("e" "event")
 	("ee" "add event" entry (file "~/sync/orgfiles/events.org")
