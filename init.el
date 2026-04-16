@@ -205,6 +205,7 @@
 	(append
 	 '("~/sync/orgfiles/todo.org"
            "~/sync/orgfiles/events.org"
+	   "~/sync/orgfiles/tracker.org"
            "~/sync/orgfiles/agenda.org"
            "~/sync/orgfiles/watchlist.org")
 	 (directory-files-recursively "~/sync/projects/active" "\\.org$")))

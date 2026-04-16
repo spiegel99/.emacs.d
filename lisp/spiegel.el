@@ -21,11 +21,6 @@
 
 
 ;;;; productivity workflow
-(defun tracker-agenda ()
-  "Print tracker agenda"
-  (interactive)
-  (let ((org-agenda-files '("~/sync/orgfiles/tracker.org")))
-    (org-agenda nil "a")))
 
 (defun current-week ()
   "Insert current ISO week for meeting notes index."
