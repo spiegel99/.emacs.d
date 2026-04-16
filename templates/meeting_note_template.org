@@ -7,7 +7,7 @@
 ** in attendance
   %^{in attendance}
 
-* note
+* notes
 
   %?
 
