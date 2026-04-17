@@ -184,7 +184,7 @@
 
 ;;install sbcl
 (use-package sly
-  :ensure t)
+  :hook (sly-mrepl-mode . (lambda () (display-line-numbers-mode -1))))
 
 ;;;; +-----+
 ;;;; | org |

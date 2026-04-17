@@ -5,7 +5,10 @@
 ** date
   %U
 ** in attendance
-  %^{in attendance}
+   | Name              | Team     |
+   |-------------------+----------|
+   | %^{in attendance} | %^{team} |
+   | %^{in attendance} | %^{team} |
 
 * notes
 
