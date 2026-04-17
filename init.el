@@ -28,11 +28,6 @@
 
 (set-frame-font "Iosevka Term 16" nil t)
 
-;; (use-package doom-themes
-;;   :ensure t
-;;   :config
-;;   (load-theme 'doom-spacegrey t))
-
 (load-theme 'ujelly t)
   
 ;;send auto-save files to another directory
@@ -128,9 +123,9 @@
 (use-package vterm
   :ensure t
   :init
-  (global-set-key (kbd "C-c <return>") 'vterm))
-
-(add-hook 'vterm-mode-hook (lambda () (display-line-numbers-mode 0)))
+  (global-set-key (kbd "C-c <return>") 'vterm)
+  :hook (vterm-mode . (lambda ()
+			(display-line-numbers-mode 0))))
 
 ;; also installed ripgrep on terminal to use counsel-projectile-rg
 (use-package projectile
@@ -196,6 +191,7 @@
 ;;;; +-----+
 
 (use-package org
+  :hook (org-mode-hook . visual-line-mode)
   :config
   (setq org-agenda-start-with-log-mode t)
   (setq org-log-done 'time)
@@ -387,8 +383,6 @@
 (setq org-babel-python-command "python3")
 ;;tells org babel where to find the ditaa.jar file
 (setq org-ditaa-jar-path "/usr/share/ditaa/ditaa.jar")
-;use visual-line-mode for org files
-(add-hook 'org-mode-hook #'visual-line-mode)
 
 (use-package org-ql
   :ensure t)
