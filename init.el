@@ -191,7 +191,7 @@
 ;;;; +-----+
 
 (use-package org
-  :hook (org-mode-hook . visual-line-mode)
+  :hook (org-mode . visual-line-mode)
   :config
   (setq org-agenda-start-with-log-mode t)
   (setq org-log-done 'time)
