@@ -4,7 +4,7 @@
 (load custom-file)
 
 (add-to-list 'load-path '"~/.emacs.d/lisp")
-(require 'spiegel)
+(require 'sp-workflow)
  
 ;;;; +---------------------+
 ;;;; | basic configuration |
@@ -28,7 +28,7 @@
 
 (set-frame-font "Iosevka Term 16" nil t)
 
-(load-theme 'ujelly t)
+(load-theme 'doom-tomorrow-night t)
   
 ;;send auto-save files to another directory
 (setq backup-directory-alist '(("." . "~/backup")))
@@ -96,9 +96,11 @@
   (ivy-rich-mode 1))
 
 (use-package rainbow-delimiters
+  :ensure t
   :hook (prog-mode . rainbow-delimiters-mode))
 
 (use-package which-key
+  :ensure t
   :defer 0
   :diminish which-key-mode
   :config
@@ -126,6 +128,12 @@
   (global-set-key (kbd "C-c <return>") 'vterm)
   :hook (vterm-mode . (lambda ()
 			(display-line-numbers-mode 0))))
+
+(use-package multiple-cursors
+  :ensure t
+  :bind (("C->" . mc/mark-next-like-this)
+         ("C-<"   . mc/mark-previous-like-this)
+         ("C-c C-<" . mc/mark-all-like-this)))
 
 ;; also installed ripgrep on terminal to use counsel-projectile-rg
 (use-package projectile
@@ -173,15 +181,19 @@
          ("C-c e r n" . eglot-rename)
          ("C-c e s" . eglot-shutdown)))
 
+;; documentation
+(setq eldoc-echo-area-use-multiline-p nil)
+(setq eldoc-echo-area-prefer-doc-buffer t)
+
 ;(add-hook 'python-mode-hook 'eglot-ensure) 
+
+;;;; python
 
 (use-package poetry
   :ensure t)
 ;  :hook (python-mode . poetry-tracking-mode))
 
-;;inhibit eldoc
-(setq eldoc-echo-area-use-multiline-p nil)
-
+;;Common lisp
 ;;install sbcl
 (use-package sly
   :hook (sly-mrepl-mode . (lambda () (display-line-numbers-mode -1))))
@@ -202,7 +214,9 @@
 	 '("~/sync/orgfiles/todo.org"
            "~/sync/orgfiles/events.org"
 	   "~/sync/orgfiles/tracker.org"
+	   "~/sync/orgfiles/refile.org"
            "~/sync/orgfiles/agenda.org"
+	   "~/sync/orgfiles/books.org"
            "~/sync/orgfiles/watchlist.org")
 	 (directory-files-recursively "~/sync/projects/active" "\\.org$")))
   (setq org-agenda-inhibit-startup t)
@@ -212,9 +226,9 @@
   (setq org-habit-show-habits-only-for-today nil)
 
   (setq org-todo-keywords
-	'((sequence "TODO(t)" "HOLD(h)" "DOC(w)" "PROG(p)" "|" "DONE(d)" "CANC(c)")))
+	'((sequence "TODO(t)" "HOLD(h)" "DOC(w)" "REF(r)" "PROG(p)" "|" "DONE(d)" "CANC(c)")))
   (setq org-todo-keyword-faces
-        '(("PROG" . "orange") ("HOLD" . "grey") ("DOC" . "red")))
+        '(("PROG" . "orange") ("HOLD" . "grey") ("DOC" . "red") ("REF" . "purple")))
   (setq org-refile-targets
 	'(("~/backup/archive.org" :maxlevel . 1)))
   ;; Save Org buffers after refiling
@@ -223,7 +237,10 @@
   (setq org-agenda-custom-commands 
    '(("v" "Event" tags "event")
      ("w" "Workflow Status"
-     ((todo "TODO"
+      ((todo "REF"
+            ((org-agenda-overriding-header "INBOX")
+             (org-agenda-files org-agenda-files)))    
+       (todo "TODO"
             ((org-agenda-overriding-header "BACKLOG")
              (org-agenda-files org-agenda-files)))
       (todo "HOLD"
@@ -243,27 +260,27 @@
              (org-agenda-files org-agenda-files)))))))
   ;; Define Org Capture templates
   (setq org-capture-templates
-      '(("t" "task")
-        ("tt" "task" entry (file "~/sync/orgfiles/todo.org")
-         "* TODO %?")
-        ("tl" "task with link" entry (file "~/sync/orgfiles/todo.org")
-         "* TODO %?\n  %a\n  %i")
+	'(("i" "inbox")
+	  ("ii" "inbox" entry (file "~/sync/orgfiles/refile.org")
+	 "* REF %?")
+          ("il" "inbox with link" entry (file "~/sync/orgfiles/refile.org")
+         "* REF %?\n  %a\n  %i") 
+
+	  ("t" "task")
+          ("tt" "task" entry (file "~/sync/orgfiles/todo.org")
+           "* TODO %?")
+          ("tl" "task with link" entry (file "~/sync/orgfiles/todo.org")
+           "* TODO %?\n  %a\n  %i")
 	
-	("l" "ledger entry")	
-	("ld" "debit differe" plain
-                (file "~/sync/ledger/2026/journal.dat")
-	        "%(org-read-date) * debit differe 
+	  ("l" "ledger entry")	
+	  ("ld" "debit differe" plain
+           (file "~/sync/ledger/2026/journal.dat")
+	   "%(org-read-date) * debit differe 
   liabilities:CEbank:visa  %^{Amount} EUR
   assets:CEbank:compte")
-
-	("n" "quick note")
-	("nn" "note" entry (file "~/sync/orgfiles/refile.org")
-	 "* %?")
-        ("nl" "note with link" entry (file "~/sync/orgfiles/refile.org")
-         "* %?\n  %a\n  %i") 
-
-	("b" "blog idea")
-	("bb" "blog post idea" entry (file "~/repos/blog/ideas.org")
+	  
+	("b" "blog")
+	("bi" "blog post idea" entry (file "~/repos/blog/ideas.org")
 	 "* %?")
         ("bl" "blog post idea with link" entry (file "~/repos/blog/ideas.org")
          "* %?\n  %a\n  %i")
@@ -279,19 +296,19 @@
 	 "* %? :event:")
 
 	("s" "sport tracker")
-	("sb" "biceps" table-line (file+headline "~/sync/orgfiles/sport.org" "biceps")
+	("sb" "biceps" table-line (file+headline "~/sync/reports/sport.org" "biceps")
 	 "| %U | %^{week number} | %^{exo} | %^{reps} | %^{weight} kg |" :kill-buffer t)
-	("sc" "chest" table-line (file+headline "~/sync/orgfiles/sport.org" "chest")
+	("sc" "chest" table-line (file+headline "~/sync/reports/sport.org" "chest")
 	 "| %U | %^{week number} | %^{exo} | %^{reps} | %^{weight} kg |" :kill-buffer t)
-	("sl" "legs" table-line (file+headline "~/sync/orgfiles/sport.org" "legs")
+	("sl" "legs" table-line (file+headline "~/sync/reports/sport.org" "legs")
 	 "| %U | %^{week number} | %^{exo} | %^{reps} | %^{weight} kg |" :kill-buffer t)
-	("sa" "abs" table-line (file+headline "~/sync/orgfiles/sport.org" "abs")
+	("sa" "abs" table-line (file+headline "~/sync/reports/sport.org" "abs")
 	 "| %U | %^{week number} | %^{exo} | %^{reps} | %^{time} s |" :kill-buffer t)
-	("ss" "shoulders" table-line (file+headline "~/sync/orgfiles/sport.org" "shoulders")
+	("ss" "shoulders" table-line (file+headline "~/sync/reports/sport.org" "shoulders")
 	 "| %U | %^{week number} | %^{exo} | %^{reps} | %^{weight} kg |" :kill-buffer t)
-	("sk" "back" table-line (file+headline "~/sync/orgfiles/sport.org" "back")
+	("sk" "back" table-line (file+headline "~/sync/reports/sport.org" "back")
 	 "| %U | %^{week number} | %^{exo} | %^{reps} | %^{weight} kg |" :kill-buffer t)
-	("st" "triceps" table-line (file+headline "~/sync/orgfiles/sport.org" "triceps")
+	("st" "triceps" table-line (file+headline "~/sync/reports/sport.org" "triceps")
 	 "| %U | %^{week number} | %^{exo} | %^{reps} | %^{weight} kg |" :kill-buffer t)
       
 	("a" "agenda")
@@ -337,6 +354,7 @@
       ("m" "meeting" plain
       (file "~/.emacs.d/templates/meeting_note_template.org")
       :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
+      :hook sp/org-table-align-backward
       :clock-in :clock-resume
       :unnarrowed t)
       ("r" "recipe" plain
@@ -413,14 +431,15 @@
 
 (global-set-key "\C-ca" 'org-agenda)
 (global-set-key "\C-cc" 'org-capture)
-(global-set-key "\C-cl" 'calendar)
+(global-set-key "\C-cw" 'calendar)
 (global-set-key "\C-cv" 'visual-line-mode)
 (global-set-key "\C-cd" 'copy-from-above-command)
 (global-set-key "\C-cf" 'org-pomodoro)
 (global-set-key "\C-cy" 'poetry)
 (global-set-key "\C-cz" 'string-insert-rectangle)
 (global-set-key "\C-cr" 'counsel-projectile-rg)
-(global-set-key "\C-cs" 'stuck-projects)
-(global-set-key "\C-cm" 'my-projects)
+(global-set-key "\C-cs" 'sp/stuck-projects)
+(global-set-key "\C-cm" 'sp/find-project)
 (global-set-key "\C-cu" 'org-update-all-dblocks)
-(global-set-key "\C-co" 'orgfiles)
+(global-set-key "\C-co" 'sp/open-orgfiles)
+(global-set-key "\C-cl" 'sp/open-ledger-dir)

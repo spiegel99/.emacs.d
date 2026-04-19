@@ -22,12 +22,7 @@
 
 ;;;; productivity workflow
 
-(defun current-week ()
-  "Insert current ISO week for meeting notes index."
-  (interactive)
-  (insert (format-time-string "* week %V of %Y - %d/%m")))
-
-(defun stuck-projects ()
+(defun sp/stuck-projects ()
   "Show active tasks with no clock activity in the last 10 days."
   (interactive)
   (org-ql-search
@@ -36,7 +31,8 @@
           (not (clocked :from -10)))
     :title "Stuck projects (no activity in 10 days)"))
 
-(defun my-projects ()
+(defun sp/find-project ()
+  "Find project in my /active folder"
   (interactive)
   (let* ((proj
           (seq-uniq
@@ -49,9 +45,27 @@
             (property "PROJECT" ,cat :inherit t))
       :title (format "Project: %s" cat))))
 
-(defun orgfiles ()
+(defun sp/open-orgfiles ()
+  "Open orgfiles directory"
   (interactive)
   (dired "~/sync/orgfiles")
   (message "opened orgfiles directory"))
 
-(provide 'spiegel)
+(defun sp/open-ledger-dir ()
+  "Open ledger directory"
+  (interactive)
+  (dired "~/sync/ledger")
+  (message "opened ledger directory"))
+
+; to be used to align quickly the table in meeting notes.
+(defun sp/org-table-align-backward ()
+  "Align closest table backward. Function written for my meeting notes"
+  (interactive)
+  (save-excursion
+  (let ((back (search-backward "|")))
+    (when back
+      (goto-char back)
+      (org-table-align)
+      (message "aligned table position %d" back)))))
+
+(provide 'sp-workflow)
