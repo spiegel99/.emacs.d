@@ -28,7 +28,7 @@
 
 (set-frame-font "Iosevka Term 16" nil t)
 
-(load-theme 'doom-tomorrow-night t)
+(load-theme 'doom-gruvbox t)
   
 ;;send auto-save files to another directory
 (setq backup-directory-alist '(("." . "~/backup")))
@@ -228,50 +228,67 @@
   (setq org-todo-keywords
 	'((sequence "TODO(t)" "HOLD(h)" "DOC(w)" "REF(r)" "PROG(p)" "|" "DONE(d)" "CANC(c)")))
   (setq org-todo-keyword-faces
-        '(("PROG" . "orange") ("HOLD" . "grey") ("DOC" . "red") ("REF" . "purple")))
+        '(("PROG" . "orange") ("HOLD" . "grey") ("DOC" . "red") ("REF" . "pink")))
   (setq org-refile-targets
 	'(("~/backup/archive.org" :maxlevel . 1)))
   ;; Save Org buffers after refiling
   (advice-add 'org-refile :after 'org-save-all-org-buffers)
 
+  
+  (setq org-tag-alist (quote (("@away" . ?a)
+			      ("@site" . ?s)
+                            ("@office" . ?o)
+                            ("@home" . ?h))))
+  
   (setq org-agenda-custom-commands 
-   '(("v" "Event" tags "event")
-     ("w" "Workflow Status"
-      ((todo "REF"
-            ((org-agenda-overriding-header "INBOX")
-             (org-agenda-files org-agenda-files)))    
-       (todo "TODO"
-            ((org-agenda-overriding-header "BACKLOG")
-             (org-agenda-files org-agenda-files)))
-      (todo "HOLD"
-            ((org-agenda-overriding-header "ON HOLD")
-             (org-agenda-files org-agenda-files)))
-      (todo "PROG"
-            ((org-agenda-overriding-header "IN PROGRESS")
-             (org-agenda-files org-agenda-files)))
-      (todo "DOC"
-            ((org-agenda-overriding-header "WRITE DOCUMENTATION")
-             (org-agenda-files org-agenda-files)))
-      (todo "DONE"
-            ((org-agenda-overriding-header "FINISHED")
-             (org-agenda-files org-agenda-files)))
-      (todo "CANC"
-            ((org-agenda-overriding-header "CANCELLED")
-             (org-agenda-files org-agenda-files)))))))
+	'(("b" "Bureau" tags "@office")
+	  ("y" "Away" tags "@away")
+	  ("s" "Site" tags "@site")
+	  ("h" "Home" tags "@home")
+	  ("o" "Overview"
+	   ((agenda ""
+                 ((org-agenda-span 'day)
+                  (org-deadline-warning-days 365)))
+	     (todo "REF"
+		  ((org-agenda-overriding-header "Inbox")
+		   (org-agenda-files org-agenda-files)))
+	     (todo "PROG"
+		  ((org-agenda-overriding-header "Current projects")
+		   (org-agenda-files org-agenda-files)))))
+	  
+	  ("w" "Workflow Status"
+	   ((todo "TODO"
+		  ((org-agenda-overriding-header "BACKLOG")
+		   (org-agenda-files org-agenda-files)))
+	    (todo "HOLD"
+		  ((org-agenda-overriding-header "ON HOLD")
+		   (org-agenda-files org-agenda-files)))
+	    (todo "PROG"
+		  ((org-agenda-overriding-header "IN PROGRESS")
+		   (org-agenda-files org-agenda-files)))
+	    (todo "DOC"
+		  ((org-agenda-overriding-header "WRITE DOCUMENTATION")
+		   (org-agenda-files org-agenda-files)))
+	    (todo "DONE"
+		  ((org-agenda-overriding-header "FINISHED")
+		   (org-agenda-files org-agenda-files)))
+	    (todo "CANC"
+		  ((org-agenda-overriding-header "CANCELLED")
+		   (org-agenda-files org-agenda-files)))))))
   ;; Define Org Capture templates
   (setq org-capture-templates
 	'(("i" "inbox")
 	  ("ii" "inbox" entry (file "~/sync/orgfiles/refile.org")
-	 "* REF %?")
+	   "* REF %?")
           ("il" "inbox with link" entry (file "~/sync/orgfiles/refile.org")
-         "* REF %?\n  %a\n  %i") 
+           "* REF %?\n  %a\n  %i") 
 
 	  ("t" "task")
           ("tt" "task" entry (file "~/sync/orgfiles/todo.org")
            "* TODO %?")
           ("tl" "task with link" entry (file "~/sync/orgfiles/todo.org")
            "* TODO %?\n  %a\n  %i")
-	
+	  
 	  ("l" "ledger entry")	
 	  ("ld" "debit differe" plain
            (file "~/sync/ledger/2026/journal.dat")
@@ -279,41 +296,41 @@
   liabilities:CEbank:visa  %^{Amount} EUR
   assets:CEbank:compte")
 	  
-	("b" "blog")
-	("bi" "blog post idea" entry (file "~/repos/blog/ideas.org")
-	 "* %?")
-        ("bl" "blog post idea with link" entry (file "~/repos/blog/ideas.org")
-         "* %?\n  %a\n  %i")
+	  ("b" "blog")
+	  ("bi" "blog post idea" entry (file "~/repos/blog/ideas.org")
+	   "* %?")
+          ("bl" "blog post idea with link" entry (file "~/repos/blog/ideas.org")
+           "* %?\n  %a\n  %i")
 
-	("w" "watchlist")
-	("wm" "add movie to watchlist" entry (file "~/sync/orgfiles/watchlist.org")
-         "* TOWATCH %? :movie:")
-	("ws" "add show to watchlist" entry (file "~/sync/orgfiles/watchlist.org")
-         "* TOWATCH %? :show:")
-	
-	("e" "event")
-	("ee" "add event" entry (file "~/sync/orgfiles/events.org")
-	 "* %? :event:")
+	  ("w" "watchlist")
+	  ("wm" "add movie to watchlist" entry (file "~/sync/orgfiles/watchlist.org")
+           "* TOWATCH %?")
+	  ("ws" "add show to watchlist" entry (file "~/sync/orgfiles/watchlist.org")
+           "* TOWATCH %?")
+	  
+	  ("e" "event")
+	  ("ee" "add event" entry (file "~/sync/orgfiles/events.org")
+	   "* %? :event:")
 
-	("s" "sport tracker")
-	("sb" "biceps" table-line (file+headline "~/sync/reports/sport.org" "biceps")
-	 "| %U | %^{week number} | %^{exo} | %^{reps} | %^{weight} kg |" :kill-buffer t)
-	("sc" "chest" table-line (file+headline "~/sync/reports/sport.org" "chest")
-	 "| %U | %^{week number} | %^{exo} | %^{reps} | %^{weight} kg |" :kill-buffer t)
-	("sl" "legs" table-line (file+headline "~/sync/reports/sport.org" "legs")
-	 "| %U | %^{week number} | %^{exo} | %^{reps} | %^{weight} kg |" :kill-buffer t)
-	("sa" "abs" table-line (file+headline "~/sync/reports/sport.org" "abs")
-	 "| %U | %^{week number} | %^{exo} | %^{reps} | %^{time} s |" :kill-buffer t)
-	("ss" "shoulders" table-line (file+headline "~/sync/reports/sport.org" "shoulders")
-	 "| %U | %^{week number} | %^{exo} | %^{reps} | %^{weight} kg |" :kill-buffer t)
-	("sk" "back" table-line (file+headline "~/sync/reports/sport.org" "back")
-	 "| %U | %^{week number} | %^{exo} | %^{reps} | %^{weight} kg |" :kill-buffer t)
-	("st" "triceps" table-line (file+headline "~/sync/reports/sport.org" "triceps")
-	 "| %U | %^{week number} | %^{exo} | %^{reps} | %^{weight} kg |" :kill-buffer t)
-      
-	("a" "agenda")
-	("aa" "add item in agenda" entry (file "~/sync/orgfiles/agenda.org")
-	 "* %?"))))
+	  ("s" "sport")
+	  ("sb" "biceps" table-line (file+headline "~/sync/reports/sport.org" "biceps")
+	   "| %U | %^{week number} | %^{exo} | %^{reps} | %^{weight} kg |" :kill-buffer t)
+	  ("sc" "chest" table-line (file+headline "~/sync/reports/sport.org" "chest")
+	   "| %U | %^{week number} | %^{exo} | %^{reps} | %^{weight} kg |" :kill-buffer t)
+	  ("sl" "legs" table-line (file+headline "~/sync/reports/sport.org" "legs")
+	   "| %U | %^{week number} | %^{exo} | %^{reps} | %^{weight} kg |" :kill-buffer t)
+	  ("sa" "abs" table-line (file+headline "~/sync/reports/sport.org" "abs")
+	   "| %U | %^{week number} | %^{exo} | %^{reps} | %^{time} s |" :kill-buffer t)
+	  ("ss" "shoulders" table-line (file+headline "~/sync/reports/sport.org" "shoulders")
+	   "| %U | %^{week number} | %^{exo} | %^{reps} | %^{weight} kg |" :kill-buffer t)
+	  ("sk" "back" table-line (file+headline "~/sync/reports/sport.org" "back")
+	   "| %U | %^{week number} | %^{exo} | %^{reps} | %^{weight} kg |" :kill-buffer t)
+	  ("st" "triceps" table-line (file+headline "~/sync/reports/sport.org" "triceps")
+	   "| %U | %^{week number} | %^{exo} | %^{reps} | %^{weight} kg |" :kill-buffer t)
+	  
+	  ("a" "agenda")
+	  ("aa" "add item in agenda" entry (file "~/sync/orgfiles/agenda.org")
+	   "* %?"))))
 
 (use-package org-bullets
   :ensure t
@@ -443,3 +460,4 @@
 (global-set-key "\C-cu" 'org-update-all-dblocks)
 (global-set-key "\C-co" 'sp/open-orgfiles)
 (global-set-key "\C-cl" 'sp/open-ledger-dir)
+(put 'narrow-to-region 'disabled nil)
