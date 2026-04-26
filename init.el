@@ -1,4 +1,4 @@
-;;;;  EMACS VERSION 30.1 AT LEAST RECOMMENDED
+;;;  EMACS VERSION 30.1 AT LEAST RECOMMENDED
 
 (setq custom-file "~/.emacs.d/custom.el")
 (load custom-file)
@@ -172,8 +172,32 @@
   :after (treemacs projectile)
   :ensure t)
 
-;; emacs built-in auto-completion
-(global-completion-preview-mode 1)
+(use-package corfu
+  ;; Optional customizations
+  ;; :custom
+  ;; (corfu-cycle t)                ;; Enable cycling for `corfu-next/previous'
+  ;; (corfu-quit-at-boundary nil)   ;; Never quit at completion boundary
+  ;; (corfu-quit-no-match nil)      ;; Never quit, even if there is no match
+  ;; (corfu-preview-current nil)    ;; Disable current candidate preview
+  ;; (corfu-preselect 'prompt)      ;; Preselect the prompt
+  ;; (corfu-on-exact-match 'insert) ;; Configure handling of exact matches
+
+  ;; Enable Corfu only for certain modes. See also `global-corfu-modes'.
+  ;; :hook ((prog-mode . corfu-mode)
+  ;;        (shell-mode . corfu-mode)
+  ;;        (eshell-mode . corfu-mode))
+
+  :init
+
+  ;; Recommended: Enable Corfu globally.  Recommended since many modes provide
+  ;; Capfs and Dabbrev can be used globally (M-/).  See also the customization
+  ;; variable `global-corfu-modes' to exclude certain modes.
+  (global-corfu-mode)
+
+  ;; Enable optional extension modes:
+  ;; (corfu-history-mode)
+  ;; (corfu-popupinfo-mode)
+  )
 
 (use-package eglot
   :bind (("C-c e c" . eglot-reconnect)
@@ -231,6 +255,7 @@
         '(("PROG" . "orange") ("HOLD" . "grey") ("DOC" . "red") ("REF" . "pink")))
   (setq org-refile-targets
 	'(("~/backup/archive.org" :maxlevel . 1)))
+ 
   ;; Save Org buffers after refiling
   (advice-add 'org-refile :after 'org-save-all-org-buffers)
 
@@ -238,7 +263,8 @@
   (setq org-tag-alist (quote (("@away" . ?a)
 			      ("@site" . ?s)
                             ("@office" . ?o)
-                            ("@home" . ?h))))
+                            ("@home" . ?h)
+			    ("noexport" . ?n))))
   
   (setq org-agenda-custom-commands 
 	'(("b" "Bureau" tags "@office")
@@ -456,7 +482,7 @@
 (global-set-key "\C-cz" 'string-insert-rectangle)
 (global-set-key "\C-cr" 'counsel-projectile-rg)
 (global-set-key "\C-cs" 'sp/stuck-projects)
-(global-set-key "\C-cm" 'sp/find-project)
+(global-set-key "\C-cb" 'sp/org-prob-find-project)
 (global-set-key "\C-cu" 'org-update-all-dblocks)
 (global-set-key "\C-co" 'sp/open-orgfiles)
 (global-set-key "\C-cl" 'sp/open-ledger-dir)

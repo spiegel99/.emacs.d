@@ -31,7 +31,7 @@
           (not (clocked :from -10)))
     :title "Stuck projects (no activity in 10 days)"))
 
-(defun sp/find-project ()
+(defun sp/org-prob-find-project ()
   "Find project in my /active folder"
   (interactive)
   (let* ((proj
