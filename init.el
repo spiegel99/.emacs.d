@@ -5,7 +5,8 @@
 
 (add-to-list 'load-path '"~/.emacs.d/lisp")
 (require 'sp-workflow)
- 
+(require 'sp-org-prob)
+
 ;;;; +---------------------+
 ;;;; | basic configuration |
 ;;;; +---------------------+
@@ -15,7 +16,6 @@
 (menu-bar-mode -1)
 (scroll-bar-mode -1)
 
-(global-display-line-numbers-mode 1)
 (global-hl-line-mode 1)
 ;;replace yes or no by 'y' or 'n'
 (fset 'yes-or-no-p 'y-or-n-p)
@@ -26,9 +26,9 @@
         (or (char-equal c ?<)
             (electric-pair-default-inhibit c))))
 
-(set-frame-font "Iosevka Term 16" nil t)
+;(set-frame-font "Iosevka Term 16" nil t)
 
-(load-theme 'doom-gruvbox t)
+(load-theme 'tango t)
   
 ;;send auto-save files to another directory
 (setq backup-directory-alist '(("." . "~/backup")))
@@ -481,8 +481,9 @@
 (global-set-key "\C-cy" 'poetry)
 (global-set-key "\C-cz" 'string-insert-rectangle)
 (global-set-key "\C-cr" 'counsel-projectile-rg)
-(global-set-key "\C-cs" 'sp/stuck-projects)
-(global-set-key "\C-cb" 'sp/org-prob-find-project)
+(global-set-key (kbd "C-c b f") 'sp/org-prob-find-project)
+(global-set-key (kbd "C-c b n") 'sp/org-prob-new-project)
+(global-set-key (kbd "C-c b s") 'sp/org-prob-stuck-projects)
 (global-set-key "\C-cu" 'org-update-all-dblocks)
 (global-set-key "\C-co" 'sp/open-orgfiles)
 (global-set-key "\C-cl" 'sp/open-ledger-dir)
