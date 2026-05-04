@@ -15,10 +15,8 @@
 	 (dir (concat "~/sync/projects/active/" projectname))
 	 (projectile (concat dir "/" ".projectile"))
 	 (filename (concat pid "-" short-title ".org"))
-	 (filepath (concat dir "/" filename)))
+	 (filepath (concat "~/sync/projects/prob/" filename)))
     (make-directory dir)
-    (find-file projectile)
-    (save-buffer)
     (find-file filepath)
     (sp/org-prob-insert-template title date full-title)
     (setq sp/org-prob-project-id (1+ sp/org-prob-project-id))
@@ -32,7 +30,10 @@
   (insert "#+TITLE: " title "\n")
   (insert "#+DATE: "  date  "\n")
   (insert "#+AUTHOR: " (user-full-name) "\n")
+  (insert "#+STARTUP: overview \n")
   (insert "#+COLUMNS: %25ITEM(Task) %TODO(State) %5Effort(Estimated [min]){:} %Resources(Members) %SCHEDULED %DEADLINE %CLOSED %CLOCKSUM(Clocked) %CLOCKSUM_T(Today)\n")
+  (insert "\n* COMMENT Info")
+  (insert "\n* COMMENT Reporting\n")
   (insert "#+begin: columnview :hlines 2 :skip-empty-rows \"t\" :indent \"t\" :id \n")
   (insert "#+CAPTION: Overview\n")
   (insert "\n#+end\n")
@@ -40,6 +41,7 @@
   (insert "#+end\n")
   (insert "\n* WBS")
   (org-set-property "PROJECT" project)
+  (org-set-property "VISIBILITY" "children")
   (setq wbsid (org-id-get-create))
   (goto-char (+ 3 (search-backward "id")))
   (insert wbsid)
@@ -51,23 +53,30 @@
   "Show active tasks in my projects with no clock activity in the last 10 days."
   (interactive)
   (org-ql-search
-    (org-agenda-files)
+    (directory-files "~/sync/projects/prob" t "\\.org\\'")
     '(and (todo "PROG")
           (not (clocked :from -10)))
     :title "Stuck projects (no activity in 10 days)"))
 
 (defun sp/org-prob-find-project ()
-  "Find project"
   (interactive)
-  (let* ((proj
+  (let* ((files (directory-files "~/sync/projects/prob" t "\\.org\\'"))
+         (proj
           (seq-uniq
-           (org-ql-select (org-agenda-files)
-             '(property "PROJECT")
-             :action '(org-entry-get (point) "PROJECT"))))
-         (cat (completing-read "Project: " proj)))
-    (org-ql-search (org-agenda-files)
-      `(and (todo "TODO" "PROG" "HOLD" "DOC")
-            (property "PROJECT" ,cat :inherit t))
-      :title (format "Project: %s" cat))))
+           (delq nil
+                 (mapcan (lambda (file)
+                           (with-current-buffer (find-file-noselect file)
+                             (org-map-entries
+                              (lambda ()
+                                (org-entry-get (point) "PROJECT")))))
+                         files))))
+         (cat      (completing-read "Project: " proj))
+         (filename (substring cat 7 15))
+         (filepath (concat "~/sync/projects/prob/" filename ".org")))
+    (find-file filepath)))
+    
+(global-set-key (kbd "C-c b f") 'sp/org-prob-find-project)    
+(global-set-key (kbd "C-c b n") 'sp/org-prob-new-project)
+(global-set-key (kbd "C-c b s") 'sp/org-prob-stuck-projects)
 
 (provide 'sp-org-prob)

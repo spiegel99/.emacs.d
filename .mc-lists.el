@@ -3,6 +3,7 @@
 
 (setq mc/cmds-to-run-for-all
       '(
+	org-self-insert-command
 	wdired--self-insert
 	wdired-finish-edit
 	))

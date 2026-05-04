@@ -27,8 +27,10 @@
             (electric-pair-default-inhibit c))))
 
 ;(set-frame-font "Iosevka Term 16" nil t)
+(set-frame-font "AcPlus IBM VGA 8x16 15" nil t)
 
-(load-theme 'tango t)
+;(load-theme 'year-1984 t)
+(load-theme 'ujelly t)
   
 ;;send auto-save files to another directory
 (setq backup-directory-alist '(("." . "~/backup")))
@@ -174,8 +176,10 @@
 
 (use-package corfu
   ;; Optional customizations
-  ;; :custom
-  ;; (corfu-cycle t)                ;; Enable cycling for `corfu-next/previous'
+  :custom
+  (corfu-cycle t)
+  (corfu-auto t)
+  (corfu-popupinfo-delay '(0.5 . 0.2))
   ;; (corfu-quit-at-boundary nil)   ;; Never quit at completion boundary
   ;; (corfu-quit-no-match nil)      ;; Never quit, even if there is no match
   ;; (corfu-preview-current nil)    ;; Disable current candidate preview
@@ -193,11 +197,8 @@
   ;; Capfs and Dabbrev can be used globally (M-/).  See also the customization
   ;; variable `global-corfu-modes' to exclude certain modes.
   (global-corfu-mode)
-
-  ;; Enable optional extension modes:
-  ;; (corfu-history-mode)
-  ;; (corfu-popupinfo-mode)
-  )
+  (corfu-history-mode)
+  (corfu-popupinfo-mode))
 
 (use-package eglot
   :bind (("C-c e c" . eglot-reconnect)
@@ -233,16 +234,7 @@
   (setq org-log-done 'time)
   (setq org-log-into-drawer t)
   (setq org-adapt-indentation t)
-  (setq org-agenda-files
-	(append
-	 '("~/sync/orgfiles/todo.org"
-           "~/sync/orgfiles/events.org"
-	   "~/sync/orgfiles/tracker.org"
-	   "~/sync/orgfiles/refile.org"
-           "~/sync/orgfiles/agenda.org"
-	   "~/sync/orgfiles/books.org"
-           "~/sync/orgfiles/watchlist.org")
-	 (directory-files-recursively "~/sync/projects/active" "\\.org$")))
+  (setq org-agenda-files '("~/sync/orgfiles" "~/sync/projects/prob"))
   (setq org-agenda-inhibit-startup t)
   (require 'org-habit)
    (add-to-list 'org-modules 'org-habit)
@@ -309,6 +301,10 @@
           ("il" "inbox with link" entry (file "~/sync/orgfiles/refile.org")
            "* REF %?\n  %a\n  %i") 
 
+	  ("a" "agenda")
+	  ("aa" "add item in agenda" entry (file "~/sync/orgfiles/agenda.org")
+	   "* %?")
+	  
 	  ("t" "task")
           ("tt" "task" entry (file "~/sync/orgfiles/todo.org")
            "* TODO %?")
@@ -333,10 +329,6 @@
            "* TOWATCH %?")
 	  ("ws" "add show to watchlist" entry (file "~/sync/orgfiles/watchlist.org")
            "* TOWATCH %?")
-	  
-	  ("e" "event")
-	  ("ee" "add event" entry (file "~/sync/orgfiles/events.org")
-	   "* %? :event:")
 
 	  ("s" "sport")
 	  ("sb" "biceps" table-line (file+headline "~/sync/reports/sport.org" "biceps")
@@ -353,10 +345,7 @@
 	   "| %U | %^{week number} | %^{exo} | %^{reps} | %^{weight} kg |" :kill-buffer t)
 	  ("st" "triceps" table-line (file+headline "~/sync/reports/sport.org" "triceps")
 	   "| %U | %^{week number} | %^{exo} | %^{reps} | %^{weight} kg |" :kill-buffer t)
-	  
-	  ("a" "agenda")
-	  ("aa" "add item in agenda" entry (file "~/sync/orgfiles/agenda.org")
-	   "* %?"))))
+	  )))
 
 (use-package org-bullets
   :ensure t
@@ -367,7 +356,7 @@
 (use-package org-pomodoro
    :commands org-pomodoro
    :config
-;   (setq org-pomodoro-audio-player "/usr/bin/paplay")
+   (setq org-pomodoro-audio-player "/usr/bin/aplay")
    (setq org-pomodoro-short-break-sound "~/.emacs.d/sounds/three_beeps.wav")
    (setq org-pomodoro-long-break-sound "~/.emacs.d/sounds/three_beeps.wav")
    (setq org-pomodoro-finished-sound "~/.emacs.d/sounds/zelda.wav"))
@@ -481,9 +470,6 @@
 (global-set-key "\C-cy" 'poetry)
 (global-set-key "\C-cz" 'string-insert-rectangle)
 (global-set-key "\C-cr" 'counsel-projectile-rg)
-(global-set-key (kbd "C-c b f") 'sp/org-prob-find-project)
-(global-set-key (kbd "C-c b n") 'sp/org-prob-new-project)
-(global-set-key (kbd "C-c b s") 'sp/org-prob-stuck-projects)
 (global-set-key "\C-cu" 'org-update-all-dblocks)
 (global-set-key "\C-co" 'sp/open-orgfiles)
 (global-set-key "\C-cl" 'sp/open-ledger-dir)

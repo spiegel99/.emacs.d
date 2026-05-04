@@ -37,7 +37,6 @@
 ; to be used to align quickly the table in meeting notes.
 (defun sp/org-table-align-backward ()
   "Align closest table backward. Function written for my meeting notes"
-  (interactive)
   (save-excursion
   (let ((back (search-backward "|")))
     (when back
