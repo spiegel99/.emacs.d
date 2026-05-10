@@ -30,7 +30,7 @@
 (set-frame-font "AcPlus IBM VGA 8x16 15" nil t)
 
 ;(load-theme 'year-1984 t)
-(load-theme 'ujelly t)
+(load-theme 'modus-vivendi-tinted t)
   
 ;;send auto-save files to another directory
 (setq backup-directory-alist '(("." . "~/backup")))
@@ -187,16 +187,16 @@
   ;; (corfu-on-exact-match 'insert) ;; Configure handling of exact matches
 
   ;; Enable Corfu only for certain modes. See also `global-corfu-modes'.
-  ;; :hook ((prog-mode . corfu-mode)
-  ;;        (shell-mode . corfu-mode)
-  ;;        (eshell-mode . corfu-mode))
+  :hook ((prog-mode . corfu-mode)
+         (shell-mode . corfu-mode)
+         (eshell-mode . corfu-mode))
 
   :init
 
   ;; Recommended: Enable Corfu globally.  Recommended since many modes provide
   ;; Capfs and Dabbrev can be used globally (M-/).  See also the customization
   ;; variable `global-corfu-modes' to exclude certain modes.
-  (global-corfu-mode)
+;  (global-corfu-mode)
   (corfu-history-mode)
   (corfu-popupinfo-mode))
 
