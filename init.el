@@ -26,11 +26,11 @@
         (or (char-equal c ?<)
             (electric-pair-default-inhibit c))))
 
-;(set-frame-font "Iosevka Term 16" nil t)
-(set-frame-font "AcPlus IBM VGA 8x16 15" nil t)
+(set-frame-font "Iosevka Term 16" nil t)
+;(set-frame-font "AcPlus IBM VGA 8x16 15" nil t)
 
 ;(load-theme 'year-1984 t)
-(load-theme 'modus-vivendi-tinted t)
+;(load-theme 'modus-vivendi-tinted t)
   
 ;;send auto-save files to another directory
 (setq backup-directory-alist '(("." . "~/backup")))
