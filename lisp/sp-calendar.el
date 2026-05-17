@@ -1,20 +1,51 @@
+;; -*- lexical-binding: t; -*-
 ;;;; calendar
 
-;; (defface busy-1 '((t :foreground "white" :background "#607d8b")) "")
-;; (defface busy-2 '((t :foreground "black" :background "white")) "")
+(defface calendar-event
+  '((t :foreground "white" :background "#607d8b"))
+  "Face for days with :event: tagged org entries.")
 
-;; (defun highlight-scheduled-days (file face month year indent)
-;;   "Highlight days with scheduled events from the specified file with the given face."
-;;   (dotimes (i 31)
-;;     (let* ((date (list month (1+ i) year))
-;;            (entries (org-agenda-get-day-entries file date)))
-;;       (when entries
-;;         (calendar-mark-visible-date date face)))))
+(defface calendar-meeting
+  '((t :foreground "black" :background "#b0bec5"))
+  "Face for days with :meeting: tagged org entries.")
 
-;; ;; hook for highlighting scheduled days in different files with different faces
-;; (defadvice calendar-generate-month
-;;   (after highlight-scheduled-days-advice (month year indent) activate)
-;;   "Highlight days with scheduled events from multiple org files."
-;;   (highlight-scheduled-days "~/sync/orgfiles/agenda.org" 'busy-2 month year indent)
-;;   (highlight-scheduled-days "~/sync/orgfiles/events.org" 'busy-1 month year indent))
+(defface calendar-trip
+  '((t :foreground "black" :background "white"))
+   "Face for days with :trip: tagged org entries.")
 
+(defun sp/calendar-highlight-by-tags (file month year)
+  "Highlight days in calendar based on org tags from FILE for MONTH/YEAR.
+:meeting: tag uses `calendar-meeting' face, :event: tag uses `calendar-event' face."
+  (dotimes (i 31)
+    (let* ((day (1+ i))
+           (date (list month day year)))
+      (when (calendar-date-is-valid-p date)
+        (dolist (entry (org-agenda-get-day-entries file date))
+          (let ((tags (get-text-property 0 'tags entry)))
+            (cond
+             ((member "meeting" tags)
+              (calendar-mark-visible-date date 'calendar-meeting))
+	     ((member "trip" tags)
+              (calendar-mark-visible-date date 'calendar-trip))
+             ((member "event" tags)
+              (calendar-mark-visible-date date 'calendar-event)))))))))
+
+(defun sp/calendar-visualize-agenda ()
+  "Open calendar and highlight days by org tag from agenda.org.
+Only highlights when called explicitly — does not affect the default calendar."
+  (interactive)
+  (let ((agenda-file (expand-file-name "~/sync/orgfiles/agenda.org")))
+    (unless (file-readable-p agenda-file)
+      (user-error "Agenda file not found: %s" agenda-file))
+    (calendar)
+    (let* ((today (calendar-current-date))
+           (month (calendar-extract-month today))
+           (year  (calendar-extract-year  today)))
+      (dolist (offset '(-1 0 1))   ; highlight prev, current, next month
+        (let ((m (+ month offset))
+              (y year))
+          (cond ((< m 1)  (setq m (+ m 12) y (1- y)))
+                ((> m 12) (setq m (- m 12) y (1+ y))))
+          (sp/calendar-highlight-by-tags agenda-file m y))))))
+
+(provide 'sp-calendar)

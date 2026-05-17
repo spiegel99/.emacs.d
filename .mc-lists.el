@@ -5,6 +5,8 @@
       '(
 	counsel-yank-pop
 	org-self-insert-command
+	org-shiftdown
+	org-shiftup
 	wdired--self-insert
 	wdired-finish-edit
 	))

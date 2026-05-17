@@ -6,6 +6,7 @@
 (add-to-list 'load-path '"~/.emacs.d/lisp")
 (require 'sp-workflow)
 (require 'sp-org-prob)
+(require 'sp-calendar)
 
 ;;;; +---------------------+
 ;;;; | basic configuration |
@@ -30,7 +31,7 @@
 ;(set-frame-font "AcPlus IBM VGA 8x16 15" nil t)
 
 ;(load-theme 'year-1984 t)
-;(load-theme 'modus-vivendi-tinted t)
+(load-theme 'doom-tomorrow-night t)
   
 ;;send auto-save files to another directory
 (setq backup-directory-alist '(("." . "~/backup")))
@@ -256,6 +257,9 @@
 			      ("@site" . ?s)
                             ("@office" . ?o)
                             ("@home" . ?h)
+			    ("meeting" . ?m)
+			    ("event" . ?e)
+			    ("trip" . ?t)
 			    ("noexport" . ?n))))
   
   (setq org-agenda-custom-commands 
@@ -302,8 +306,13 @@
            "* REF %?\n  %a\n  %i") 
 
 	  ("a" "agenda")
-	  ("aa" "add item in agenda" entry (file "~/sync/orgfiles/agenda.org")
-	   "* %?")
+	  ("am" "add meeting in agenda" entry (file "~/sync/orgfiles/agenda.org")
+	   "* %? :meeting:")
+	  ("ae" "add event in agenda" entry (file "~/sync/orgfiles/agenda.org")
+	   "* %? :event:")
+	  ("at" "add trip in agenda" entry (file "~/sync/orgfiles/agenda.org")
+	   "* %? :trip:")
+	  
 	  
 	  ("t" "task")
           ("tt" "task" entry (file "~/sync/orgfiles/todo.org")
@@ -473,4 +482,5 @@
 (global-set-key "\C-cu" 'org-update-all-dblocks)
 (global-set-key "\C-co" 'sp/open-orgfiles)
 (global-set-key "\C-cl" 'sp/open-ledger-dir)
+(global-set-key "\C-cw" 'sp/calendar-visualize-agenda)
 (put 'narrow-to-region 'disabled nil)
