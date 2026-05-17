@@ -312,8 +312,7 @@
 	   "* %? :event:")
 	  ("at" "add trip in agenda" entry (file "~/sync/orgfiles/agenda.org")
 	   "* %? :trip:")
-	  
-	  
+	  	  
 	  ("t" "task")
           ("tt" "task" entry (file "~/sync/orgfiles/todo.org")
            "* TODO %?")
