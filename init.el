@@ -31,7 +31,7 @@
 ;(set-frame-font "AcPlus IBM VGA 8x16 15" nil t)
 
 ;(load-theme 'year-1984 t)
-(load-theme 'doom-tomorrow-night t)
+(load-theme 'ujelly t)
   
 ;;send auto-save files to another directory
 (setq backup-directory-alist '(("." . "~/backup")))
@@ -236,7 +236,7 @@
   (setq org-log-into-drawer t)
   (setq org-adapt-indentation t)
   (setq org-agenda-files '("~/sync/orgfiles" "~/sync/projects/prob"))
-  (setq org-agenda-inhibit-startup t)
+  (setq org-agenda-inhibit-startup nil)
   (require 'org-habit)
    (add-to-list 'org-modules 'org-habit)
   (setq org-habit-graph-column 60)
@@ -274,6 +274,11 @@
 	     (todo "REF"
 		  ((org-agenda-overriding-header "Inbox")
 		   (org-agenda-files org-agenda-files)))
+	     
+	     (tags-todo "PRIORITY=\"A\""
+             ((org-agenda-overriding-header "Urgent tasks")
+              (org-agenda-files org-agenda-files)))
+	     
 	     (todo "PROG"
 		  ((org-agenda-overriding-header "Current projects")
 		   (org-agenda-files org-agenda-files)))))
