@@ -29,7 +29,7 @@
   "Relative numbers in selected window, absolute in all others."
   (dolist (win (window-list))
     (with-current-buffer (window-buffer win)
-      (when display-line-numbers-mode
+      (when (bound-and-true-p display-line-numbers-mode)
         (setq-local display-line-numbers
                     (if (eq win (selected-window)) 'relative t))))))
 
@@ -37,9 +37,14 @@
 (add-hook 'window-selection-change-functions
           (lambda (_) (sp/update-line-numbers-all-windows)))
 
+;; Backstop for cases window-selection-change-functions misses
+;; (org-agenda jumps, some pop-to-buffer paths, etc.)
+(add-hook 'buffer-list-update-hook #'sp/update-line-numbers-all-windows)
+
 ;; FocusGained / FocusLost equivalent
 (add-hook 'focus-in-hook  #'sp/update-line-numbers-all-windows)
 (add-hook 'focus-out-hook #'sp/update-line-numbers-all-windows)
+
 (global-display-line-numbers-mode 1)
 
 (provide 'sp-workflow)
