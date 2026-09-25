@@ -3,6 +3,7 @@
 
 (setq mc/cmds-to-run-for-all
       '(
+	copy-from-above-command
 	counsel-yank-pop
 	org-self-insert-command
 	org-shiftdown
@@ -13,4 +14,5 @@
 
 (setq mc/cmds-to-run-once
       '(
+	org-end-of-line
 	))
