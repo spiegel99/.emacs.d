@@ -60,22 +60,24 @@
                    (children (clocked :from -10)))))
     :title "Stuck projects (no activity in 10 days)"))
 
+(defun sp/--prob-projects (file)
+  "Alist (PROJECT . FILE) pour chaque entrée ayant une propriété :PROJECT:."
+  (with-temp-buffer
+    (insert-file-contents file)
+    (delay-mode-hooks (org-mode))
+    (delq nil
+          (org-map-entries
+           (lambda ()
+             (when-let ((p (org-entry-get nil "PROJECT")))
+               (cons p file)))))))
+
 (defun sp/org-prob-find-project ()
+  "Choisit un projet parmi les entrées :PROJECT: et ouvre son fichier."
   (interactive)
   (let* ((files (directory-files "~/sync/projects/prob" t "\\.org\\'"))
-         (proj
-          (seq-uniq
-           (delq nil
-                 (mapcan (lambda (file)
-                           (with-current-buffer (find-file-noselect file)
-                             (org-map-entries
-                              (lambda ()
-                                (org-entry-get (point) "PROJECT")))))
-                         files))))
-         (cat      (completing-read "Project: " proj))
-         (filename (substring cat 7 15))
-         (filepath (concat "~/sync/projects/prob/" filename ".org")))
-    (find-file filepath)))
+         (alist (mapcan #'sp/--prob-projects files))
+         (choice (completing-read "Project: " alist nil t)))
+    (find-file (cdr (assoc choice alist)))))
     
 (global-set-key (kbd "C-c b f") 'sp/org-prob-find-project)    
 (global-set-key (kbd "C-c b n") 'sp/org-prob-new-project)
