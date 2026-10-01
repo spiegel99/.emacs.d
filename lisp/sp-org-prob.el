@@ -41,7 +41,6 @@
   (insert "#+end\n")
   (insert "\n* WBS")
   (org-set-property "PROJECT" project)
-  (org-set-property "VISIBILITY" "children")
   (setq wbsid (org-id-get-create))
   (goto-char (+ 3 (search-backward "id")))
   (insert wbsid)
@@ -50,12 +49,15 @@
   (save-buffer))
 
 (defun sp/org-prob-stuck-projects ()
-  "Show active tasks in my projects with no clock activity in the last 10 days."
+  "Show active level-2 project headers with no clock activity
+(on themselves or direct subheaders) in the last 10 days."
   (interactive)
   (org-ql-search
     (directory-files "~/sync/projects/prob" t "\\.org\\'")
     '(and (todo "PROG")
-          (not (clocked :from -10)))
+          (level 2)
+          (not (or (clocked :from -10)
+                   (children (clocked :from -10)))))
     :title "Stuck projects (no activity in 10 days)"))
 
 (defun sp/org-prob-find-project ()

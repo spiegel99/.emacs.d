@@ -4,7 +4,9 @@
 (setq mc/cmds-to-run-for-all
       '(
 	copy-from-above-command
+	counsel-M-x
 	counsel-yank-pop
+	org-kill-line
 	org-self-insert-command
 	org-shiftdown
 	org-shiftup

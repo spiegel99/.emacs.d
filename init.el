@@ -27,11 +27,11 @@
         (or (char-equal c ?<)
             (electric-pair-default-inhibit c))))
 
-(set-frame-font "Iosevka Term 16" nil t)
-;(set-frame-font "AcPlus IBM VGA 8x16 15" nil t)
+(set-frame-font "Iosevka  15" nil t)
+;(set-frame-font "AcPlus IBM VGA 8x16 16" nil t)
 
 ;(load-theme 'year-1984 t)
-(load-theme 'ujelly t)
+(load-theme 'doom-gruvbox t)
   
 ;;send auto-save files to another directory
 (setq backup-directory-alist '(("." . "~/backup")))
@@ -279,29 +279,30 @@
              ((org-agenda-overriding-header "Urgent tasks")
               (org-agenda-files org-agenda-files)))
 	     
-	     (todo "PROG"
+	     (tags-todo "TODO=\"PROG\"+LEVEL=2"
 		  ((org-agenda-overriding-header "Current projects")
 		   (org-agenda-files org-agenda-files)))))
 	  
-	  ("w" "Workflow Status"
-	   ((todo "TODO"
-		  ((org-agenda-overriding-header "BACKLOG")
-		   (org-agenda-files org-agenda-files)))
-	    (todo "HOLD"
-		  ((org-agenda-overriding-header "ON HOLD")
-		   (org-agenda-files org-agenda-files)))
-	    (todo "PROG"
-		  ((org-agenda-overriding-header "IN PROGRESS")
-		   (org-agenda-files org-agenda-files)))
-	    (todo "DOC"
-		  ((org-agenda-overriding-header "WRITE DOCUMENTATION")
-		   (org-agenda-files org-agenda-files)))
-	    (todo "DONE"
-		  ((org-agenda-overriding-header "FINISHED")
-		   (org-agenda-files org-agenda-files)))
-	    (todo "CANC"
-		  ((org-agenda-overriding-header "CANCELLED")
-		   (org-agenda-files org-agenda-files)))))))
+	 ("w" "Workflow Status"
+	  ((tags-todo "TODO=\"TODO\"+LEVEL=2"
+		      ((org-agenda-overriding-header "BACKLOG")
+		       (org-agenda-files (directory-files "~/sync/projects/prob" t "\\.org$"))))
+	   (tags-todo "TODO=\"HOLD\"+LEVEL=2"
+		      ((org-agenda-overriding-header "ON HOLD")
+		       (org-agenda-files (directory-files "~/sync/projects/prob" t "\\.org$"))))
+	   (tags-todo "TODO=\"PROG\"+LEVEL=2"
+		      ((org-agenda-overriding-header "IN PROGRESS")
+		       (org-agenda-files (directory-files "~/sync/projects/prob" t "\\.org$"))))
+	   (tags-todo "TODO=\"DOC\"+LEVEL=2"
+		      ((org-agenda-overriding-header "WRITE DOCUMENTATION")
+		       (org-agenda-files (directory-files "~/sync/projects/prob" t "\\.org$"))))
+	   (tags-todo "TODO=\"DONE\"+LEVEL=2"
+		      ((org-agenda-overriding-header "FINISHED")
+		       (org-agenda-files (directory-files "~/sync/projects/prob" t "\\.org$"))))
+	   (tags-todo "TODO=\"CANC\"+LEVEL=2"
+		      ((org-agenda-overriding-header "CANCELLED")
+		       (org-agenda-files (directory-files "~/sync/projects/prob" t "\\.org$"))))))))
+  
   ;; Define Org Capture templates
   (setq org-capture-templates
 	'(("i" "inbox")
@@ -338,26 +339,8 @@
            "* %?\n  %a\n  %i")
 
 	  ("w" "watchlist")
-	  ("wm" "add movie to watchlist" entry (file "~/sync/orgfiles/watchlist.org")
+	  ("ww" "add movie/show to watchlist" entry (file "~/sync/orgfiles/watchlist.org")
            "* TOWATCH %?")
-	  ("ws" "add show to watchlist" entry (file "~/sync/orgfiles/watchlist.org")
-           "* TOWATCH %?")
-
-	  ("s" "sport")
-	  ("sb" "biceps" table-line (file+headline "~/sync/reports/sport.org" "biceps")
-	   "| %U | %^{week number} | %^{exo} | %^{reps} | %^{weight} kg |" :kill-buffer t)
-	  ("sc" "chest" table-line (file+headline "~/sync/reports/sport.org" "chest")
-	   "| %U | %^{week number} | %^{exo} | %^{reps} | %^{weight} kg |" :kill-buffer t)
-	  ("sl" "legs" table-line (file+headline "~/sync/reports/sport.org" "legs")
-	   "| %U | %^{week number} | %^{exo} | %^{reps} | %^{weight} kg |" :kill-buffer t)
-	  ("sa" "abs" table-line (file+headline "~/sync/reports/sport.org" "abs")
-	   "| %U | %^{week number} | %^{exo} | %^{reps} | %^{time} s |" :kill-buffer t)
-	  ("ss" "shoulders" table-line (file+headline "~/sync/reports/sport.org" "shoulders")
-	   "| %U | %^{week number} | %^{exo} | %^{reps} | %^{weight} kg |" :kill-buffer t)
-	  ("sk" "back" table-line (file+headline "~/sync/reports/sport.org" "back")
-	   "| %U | %^{week number} | %^{exo} | %^{reps} | %^{weight} kg |" :kill-buffer t)
-	  ("st" "triceps" table-line (file+headline "~/sync/reports/sport.org" "triceps")
-	   "| %U | %^{week number} | %^{exo} | %^{reps} | %^{weight} kg |" :kill-buffer t)
 	  )))
 
 (use-package org-bullets
@@ -401,6 +384,10 @@
       :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
       :hook sp/org-table-align-backward
       :clock-in :clock-resume
+      :unnarrowed t)
+      ("p" "project" plain
+      (file "~/.emacs.d/templates/project_note_template.org")
+      :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
       :unnarrowed t)
       ("r" "recipe" plain
       (file "~/.emacs.d/templates/recipe_template.org")
