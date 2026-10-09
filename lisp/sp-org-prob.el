@@ -12,7 +12,7 @@
 	 (pid (format "%03d" sp/org-prob-project-id))
 	 (projectname (concat "P-2026-" pid "-" short-title))
 	 (full-title (concat projectname " " title))
-	 (dir (concat "~/sync/projects/active/" projectname))
+	 (dir (concat "~/sync/projects/" projectname))
 	 (projectile (concat dir "/" ".projectile"))
 	 (filename (concat pid "-" short-title ".org"))
 	 (filepath (concat "~/sync/projects/prob/" filename)))

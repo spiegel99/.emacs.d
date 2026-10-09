@@ -34,6 +34,8 @@
   "Open calendar and highlight days by org tag from agenda.org.
 Only highlights when called explicitly — does not affect the default calendar."
   (interactive)
+  (require 'org)          ; runs the :config of your use-package org block
+  (require 'org-agenda)
   (let ((agenda-file (expand-file-name "~/sync/orgfiles/agenda.org")))
     (unless (file-readable-p agenda-file)
       (user-error "Agenda file not found: %s" agenda-file))

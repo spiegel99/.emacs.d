@@ -1,5 +1,16 @@
 ;;;  EMACS VERSION 30.1 AT LEAST RECOMMENDED
 
+;;startup performance
+(setq gc-cons-threshold (* 50 1000 1000))
+(defun efs/display-startup-time ()
+  (message "Emacs loaded in %s with %d garbage collections."
+           (format "%.2f seconds"
+                   (float-time
+                   (time-subtract after-init-time before-init-time)))
+           gcs-done))
+
+(add-hook 'emacs-startup-hook #'efs/display-startup-time)
+
 (setq custom-file "~/.emacs.d/custom.el")
 (load custom-file)
 
@@ -30,9 +41,10 @@
 (set-frame-font "Iosevka  15" nil t)
 ;(set-frame-font "AcPlus IBM VGA 8x16 16" nil t)
 
-;(load-theme 'year-1984 t)
-(load-theme 'doom-gruvbox t)
-  
+(use-package doom-themes
+  :ensure t
+  :init (load-theme 'doom-gruvbox t))
+
 ;;send auto-save files to another directory
 (setq backup-directory-alist '(("." . "~/backup")))
 
@@ -60,9 +72,6 @@
 (use-package mood-line
   :config
   (mood-line-mode))
-
-(use-package swiper
-  :ensure t)
   
 (use-package ivy
   :ensure t
@@ -94,7 +103,7 @@
   (counsel-mode 1))
 
 (use-package ivy-rich
-  :ensure t
+  :after ivy
   :init
   (ivy-rich-mode 1))
 
@@ -151,11 +160,14 @@
   (setq projectile-switch-project-action #'projectile-dired))
 
 (use-package counsel-projectile
+  :after projectile
   :config (counsel-projectile-mode))
 
 (use-package magit
-  :custom
-  (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
+  :commands (magit-status magit-dispatch)
+  :bind ("C-x g" . magit-status)
+  :custom (magit-display-buffer-function
+           #'magit-display-buffer-same-window-except-diff-v1))
 
 (use-package treemacs
   :ensure t
@@ -216,6 +228,7 @@
 ;;;; python
 
 (use-package poetry
+  :defer t
   :ensure t)
 ;  :hook (python-mode . poetry-tracking-mode))
 
@@ -241,7 +254,20 @@
    (add-to-list 'org-modules 'org-habit)
   (setq org-habit-graph-column 60)
   (setq org-habit-show-habits-only-for-today nil)
+;<s TAB to generate quickly a code block
+  (require 'org-tempo)  
+;;org-babel to execute codes in org buffers
+;install ditaa to use it in org mode
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((shell . t)
+     (emacs-lisp . t)
+     (python . t)
+     (ditaa . t)))
 
+  (setq org-babel-python-command "python3")
+  ;;tells org babel where to find the ditaa.jar file
+  (setq org-ditaa-jar-path "/usr/share/ditaa/ditaa.jar")
   (setq org-todo-keywords
 	'((sequence "TODO(t)" "HOLD(h)" "DOC(w)" "REF(r)" "PROG(p)" "|" "DONE(d)" "CANC(c)")))
   (setq org-todo-keyword-faces
@@ -344,10 +370,8 @@
 	  )))
 
 (use-package org-bullets
-  :ensure t
-  :init
-  (add-hook 'org-mode-hook (lambda ()
-                             (org-bullets-mode 1)))) 
+  :hook (org-mode . org-bullets-mode)
+  :custom (org-bullets-bullet-list '("*" "*" "*" "*")))
 
 (use-package org-pomodoro
    :commands org-pomodoro
@@ -357,10 +381,8 @@
    (setq org-pomodoro-long-break-sound "~/.emacs.d/sounds/three_beeps.wav")
    (setq org-pomodoro-finished-sound "~/.emacs.d/sounds/zelda.wav"))
 
-;<s TAB to generate quickly a code block
-(require 'org-tempo)
-;export org files to markdown
-(require 'ox-md)
+(with-eval-after-load 'ox
+  (require 'ox-md))
 
 ;; tells Org about the letter class
 (with-eval-after-load 'ox-latex
@@ -421,20 +443,8 @@
   :ensure t
   :after org-roam)
 
-;;org-babel to execute codes in org buffers
-;install ditaa to use it in org mode
-(org-babel-do-load-languages
- 'org-babel-load-languages
- '((shell . t)
-   (emacs-lisp . t)
-   (python . t)
-   (ditaa . t)))
-
-(setq org-babel-python-command "python3")
-;;tells org babel where to find the ditaa.jar file
-(setq org-ditaa-jar-path "/usr/share/ditaa/ditaa.jar")
-
 (use-package org-ql
+  :defer t
   :ensure t)
 
 ;;;; +---------+
@@ -454,9 +464,11 @@
 
 ;; to visualize my site
 (use-package simple-httpd
+  :defer t
   :ensure t)
 
 (use-package htmlize
+  :defer t
   :ensure t)
 
 ;;;; keybindings
@@ -475,3 +487,6 @@
 (global-set-key "\C-cl" 'sp/open-ledger-dir)
 (global-set-key "\C-cw" 'sp/calendar-visualize-agenda)
 (put 'narrow-to-region 'disabled nil)
+
+;; Make gc pauses faster by decreasing the threshold.
+(setq gc-cons-threshold (* 2 1000 1000))
