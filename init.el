@@ -353,10 +353,53 @@
 	  
 	  ("l" "ledger entry")	
 	  ("ld" "debit differe" plain
-           (file "~/sync/ledger/2026/journal.dat")
-	   "%(org-read-date) * debit differe 
-  liabilities:CEbank:visa  %^{Amount} EUR
+	   (file "~/sync/ledger/2026/journal.dat")
+ "%(org-read-date) * depenses (to be deleted)
+  expenses:general  %^{Amount} EUR
+  liabilities:CEbank:visa
+%(org-read-date) * debit differe
+  liabilities:CEbank:visa  %\\1 EUR
   assets:CEbank:compte")
+	  ("lr" "regular" plain
+	  (file "~/sync/ledger/2026/journal.dat")
+
+"%(org-read-date) * remise cotisations bancaires
+  assets:CEbank:compte  6.73 EUR
+  income:frais
+%(org-read-date) * cotisations bancaires
+  expenses:frais  36.20 EUR
+  assets:CEbank:compte
+%(org-read-date) * remise frais bancaires
+  assets:CEbank:compte  16 EUR
+  income:frais
+
+%(org-read-date) * virement ravier immobilier 
+  expenses:rent  1441 EUR
+  assets:CEbank:compte
+
+%(org-read-date) * sarah rent
+    assets:CEbank:compte  441.00 EUR
+    income:refund:rent
+
+%(org-read-date) * vattenfall
+    expenses:home:bill  39.00 EUR
+    assets:CEbank:compte
+
+%(org-read-date) * abonnement canal+
+    expenses:subs:canal  36.99 EUR
+    assets:CEbank:compte
+
+%(org-read-date) * spb assurance supp
+    expenses:home:bill   3.99 EUR
+    assets:CEbank:compte
+
+%(org-read-date) * pass navigo
+    expenses:transport   90.80 EUR
+    assets:CEbank:compte
+
+%(org-read-date) * salaire bouygues
+    assets:CEbank:compte  %^{Amount} EUR
+    income:salary")
 	  
 	  ("b" "blog")
 	  ("bi" "blog post idea" entry (file "~/repos/blog/ideas.org")
@@ -484,6 +527,7 @@
 (global-set-key "\C-cr" 'counsel-projectile-rg)
 (global-set-key "\C-cu" 'org-update-all-dblocks)
 (global-set-key "\C-co" 'sp/open-orgfiles)
+(global-set-key "\C-cs" 'sp/stickynote)
 (global-set-key "\C-cl" 'sp/open-ledger-dir)
 (global-set-key "\C-cw" 'sp/calendar-visualize-agenda)
 (put 'narrow-to-region 'disabled nil)

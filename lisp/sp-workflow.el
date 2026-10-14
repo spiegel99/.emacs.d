@@ -8,6 +8,12 @@
   (dired "~/sync/orgfiles")
   (message "opened orgfiles directory"))
 
+(defun sp/stickynote ()
+  "Open sticky note"
+  (interactive)
+  (find-file "~/sticky-note.org")
+  (message "opened sticky note"))
+
 (defun sp/open-ledger-dir ()
   "Open ledger directory"
   (interactive)
