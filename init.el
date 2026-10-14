@@ -15,11 +15,6 @@
 (setq custom-file "~/.emacs.d/custom.el")
 (load custom-file)
 
-(add-to-list 'load-path '"~/.emacs.d/lisp")
-(require 'sp-workflow)
-(require 'sp-org-prob)
-(require 'sp-calendar)
-
 ;;;; +---------------------+
 ;;;; | basic configuration |
 ;;;; +---------------------+
@@ -421,6 +416,7 @@
    :commands org-pomodoro
    :config
    (setq org-pomodoro-audio-player "/usr/bin/aplay")
+   ;(setq org-pomodoro-audio-player "/usr/bin/aplay") ;for macos
    (setq org-pomodoro-short-break-sound "~/.emacs.d/sounds/three_beeps.wav")
    (setq org-pomodoro-long-break-sound "~/.emacs.d/sounds/three_beeps.wav")
    (setq org-pomodoro-finished-sound "~/.emacs.d/sounds/zelda.wav"))
@@ -532,6 +528,12 @@
 (global-set-key "\C-cl" 'sp/open-ledger-dir)
 (global-set-key "\C-cw" 'sp/calendar-visualize-agenda)
 (put 'narrow-to-region 'disabled nil)
+
+;; my modules
+(add-to-list 'load-path '"~/.emacs.d/lisp")
+(require 'sp-workflow)
+(require 'sp-org-prob)
+(require 'sp-calendar)
 
 ;; Make gc pauses faster by decreasing the threshold.
 (setq gc-cons-threshold (* 2 1000 1000))
