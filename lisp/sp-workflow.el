@@ -11,7 +11,7 @@
 (defun sp/stickynote ()
   "Open sticky note"
   (interactive)
-  (find-file "~/sticky-note.org")
+  (find-file "~/.sticky-note.org")
   (message "opened sticky note"))
 
 (defun sp/open-ledger-dir ()

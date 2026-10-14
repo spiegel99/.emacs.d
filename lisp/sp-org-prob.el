@@ -67,7 +67,7 @@
     (delq nil
           (org-map-entries
            (lambda ()
-             (when-let ((p (org-entry-get nil "PROJECT")))
+             (when-let* ((p (org-entry-get nil "PROJECT")))
                (cons p file)))))))
 
 (defun sp/org-prob-find-project ()

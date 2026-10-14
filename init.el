@@ -1,3 +1,4 @@
+;;; -*- lexical-binding: t -*-
 ;;;  EMACS VERSION 30.1 AT LEAST RECOMMENDED
 
 ;;startup performance
@@ -38,7 +39,7 @@
         (or (char-equal c ?<)
             (electric-pair-default-inhibit c))))
 
-(set-frame-font "Iosevka  15" nil t)
+(set-frame-font "Iosevka-15" nil t)
 ;(set-frame-font "AcPlus IBM VGA 8x16 16" nil t)
 
 (use-package doom-themes
