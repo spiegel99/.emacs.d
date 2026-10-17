@@ -16,3 +16,4 @@ Emacs is beautiful.
 - Create =~/.emacs.d/custom.el=
 - Copy or create =~/notes/= folder
 - Run ~all-the-icons-install-fonts~ after loading the config
+- Org-pomodoro: uncomment audio player for macos

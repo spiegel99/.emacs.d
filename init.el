@@ -418,7 +418,7 @@
 (use-package org-pomodoro
    :commands org-pomodoro
    :config
-   (setq org-pomodoro-audio-player "/usr/bin/aplay")
+   (setq org-pomodoro-audio-player "/usr/bin/aplay")  ;for linux
    ;(setq org-pomodoro-audio-player "/usr/bin/aplay") ;for macos
    (setq org-pomodoro-short-break-sound "~/.emacs.d/sounds/three_beeps.wav")
    (setq org-pomodoro-long-break-sound "~/.emacs.d/sounds/three_beeps.wav")
