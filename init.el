@@ -237,6 +237,9 @@
 ;;;; | org |
 ;;;; +-----+
 
+;; Force les noms de jours et de mois en anglais
+(setq system-time-locale "C")
+
 (use-package org
   :hook (org-mode . visual-line-mode)
   :config

@@ -31,7 +31,6 @@
   (insert "#+AUTHOR: " (user-full-name) "\n")
   (insert "#+STARTUP: overview \n")
   (insert "#+COLUMNS: %25ITEM(Task) %TODO(State) %5Effort(Estimated [min]){:} %Resources(Members) %SCHEDULED %DEADLINE %CLOSED %CLOCKSUM(Clocked) %CLOCKSUM_T(Today)\n")
-  (insert "\n* COMMENT Info")
   (insert "\n* COMMENT Reporting\n")
   (insert "#+begin: columnview :hlines 2 :skip-empty-rows \"t\" :indent \"t\" :id \n")
   (insert "#+CAPTION: Overview\n")
