@@ -306,7 +306,7 @@
              ((org-agenda-overriding-header "Urgent tasks")
               (org-agenda-files org-agenda-files)))
 	     
-	     (tags-todo "TODO=\"PROG\"+LEVEL=3"
+	     (todo "PROG"
 		  ((org-agenda-overriding-header "Current projects")
 		   (org-agenda-files org-agenda-files)))))
 	  
