@@ -247,6 +247,8 @@
   (setq org-log-done 'time)
   (setq org-log-into-drawer t)
   (setq org-adapt-indentation t)
+  (setq org-enforce-todo-dependencies t)
+  (setq org-agenda-dim-blocked-tasks t)
   (setq org-agenda-files '("~/sync/orgfiles" "~/sync/projects/prob"))
   (setq org-agenda-inhibit-startup nil)
   (require 'org-habit)
@@ -304,27 +306,27 @@
              ((org-agenda-overriding-header "Urgent tasks")
               (org-agenda-files org-agenda-files)))
 	     
-	     (tags-todo "TODO=\"PROG\"+LEVEL=2"
+	     (tags-todo "TODO=\"PROG\"+LEVEL=3"
 		  ((org-agenda-overriding-header "Current projects")
 		   (org-agenda-files org-agenda-files)))))
 	  
 	 ("w" "Workflow Status"
-	  ((tags-todo "TODO=\"TODO\"+LEVEL=2"
+	  ((tags-todo "TODO=\"TODO\"+LEVEL=3"
 		      ((org-agenda-overriding-header "BACKLOG")
 		       (org-agenda-files (directory-files "~/sync/projects/prob" t "\\.org$"))))
-	   (tags-todo "TODO=\"HOLD\"+LEVEL=2"
+	   (tags-todo "TODO=\"HOLD\"+LEVEL=3"
 		      ((org-agenda-overriding-header "ON HOLD")
 		       (org-agenda-files (directory-files "~/sync/projects/prob" t "\\.org$"))))
-	   (tags-todo "TODO=\"PROG\"+LEVEL=2"
+	   (tags-todo "TODO=\"PROG\"+LEVEL=3"
 		      ((org-agenda-overriding-header "IN PROGRESS")
 		       (org-agenda-files (directory-files "~/sync/projects/prob" t "\\.org$"))))
-	   (tags-todo "TODO=\"DOC\"+LEVEL=2"
+	   (tags-todo "TODO=\"DOC\"+LEVEL=3"
 		      ((org-agenda-overriding-header "WRITE DOCUMENTATION")
 		       (org-agenda-files (directory-files "~/sync/projects/prob" t "\\.org$"))))
-	   (tags-todo "TODO=\"DONE\"+LEVEL=2"
+	   (tags-todo "TODO=\"DONE\"+LEVEL=3"
 		      ((org-agenda-overriding-header "FINISHED")
 		       (org-agenda-files (directory-files "~/sync/projects/prob" t "\\.org$"))))
-	   (tags-todo "TODO=\"CANC\"+LEVEL=2"
+	   (tags-todo "TODO=\"CANC\"+LEVEL=3"
 		      ((org-agenda-overriding-header "CANCELLED")
 		       (org-agenda-files (directory-files "~/sync/projects/prob" t "\\.org$"))))))))
   
