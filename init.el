@@ -401,12 +401,6 @@
 %(org-read-date) * salaire bouygues
     assets:CEbank:compte  %^{Amount} EUR
     income:salary")
-	  
-	  ("b" "blog")
-	  ("bi" "blog post idea" entry (file "~/repos/blog/ideas.org")
-	   "* %?")
-          ("bl" "blog post idea with link" entry (file "~/repos/blog/ideas.org")
-           "* %?\n  %a\n  %i")
 
 	  ("w" "watchlist")
 	  ("ww" "add movie/show to watchlist" entry (file "~/sync/orgfiles/watchlist.org")
