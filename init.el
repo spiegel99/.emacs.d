@@ -39,7 +39,7 @@
 
 (use-package doom-themes
   :ensure t
-  :init (load-theme 'doom-gruvbox t))
+  :init (load-theme 'doom-zenburn t))
 
 ;;send auto-save files to another directory
 (setq backup-directory-alist '(("." . "~/backup")))
@@ -303,7 +303,7 @@
 		   (org-agenda-files org-agenda-files)))
 	     
 	     (tags-todo "PRIORITY=\"A\""
-             ((org-agenda-overriding-header "Urgent tasks")
+             ((org-agenda-overriding-header "High priority")
               (org-agenda-files org-agenda-files)))
 	     
 	     (todo "PROG"
