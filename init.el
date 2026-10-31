@@ -220,13 +220,6 @@
 
 ;(add-hook 'python-mode-hook 'eglot-ensure) 
 
-;;;; python
-
-(use-package poetry
-  :defer t
-  :ensure t)
-;  :hook (python-mode . poetry-tracking-mode))
-
 ;;Common lisp
 ;;install sbcl
 (use-package sly
