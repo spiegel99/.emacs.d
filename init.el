@@ -303,22 +303,22 @@
 		   (org-agenda-files org-agenda-files)))))
 	  
 	 ("w" "Workflow Status"
-	  ((tags-todo "TODO=\"TODO\"+LEVEL=3"
+	  ((tags "TODO=\"TODO\"+LEVEL=3"
 		      ((org-agenda-overriding-header "BACKLOG")
 		       (org-agenda-files (directory-files "~/sync/projects/prob" t "\\.org$"))))
-	   (tags-todo "TODO=\"HOLD\"+LEVEL=3"
+	   (tags "TODO=\"HOLD\"+LEVEL=3"
 		      ((org-agenda-overriding-header "ON HOLD")
 		       (org-agenda-files (directory-files "~/sync/projects/prob" t "\\.org$"))))
-	   (tags-todo "TODO=\"PROG\"+LEVEL=3"
+	   (tags "TODO=\"PROG\"+LEVEL=3"
 		      ((org-agenda-overriding-header "IN PROGRESS")
 		       (org-agenda-files (directory-files "~/sync/projects/prob" t "\\.org$"))))
-	   (tags-todo "TODO=\"DOC\"+LEVEL=3"
+	   (tags "TODO=\"DOC\"+LEVEL=3"
 		      ((org-agenda-overriding-header "WRITE DOCUMENTATION")
 		       (org-agenda-files (directory-files "~/sync/projects/prob" t "\\.org$"))))
-	   (tags-todo "TODO=\"DONE\"+LEVEL=3"
+	   (tags "TODO=\"DONE\"+LEVEL=3"
 		      ((org-agenda-overriding-header "FINISHED")
 		       (org-agenda-files (directory-files "~/sync/projects/prob" t "\\.org$"))))
-	   (tags-todo "TODO=\"CANC\"+LEVEL=3"
+	   (tags "TODO=\"CANC\"+LEVEL=3"
 		      ((org-agenda-overriding-header "CANCELLED")
 		       (org-agenda-files (directory-files "~/sync/projects/prob" t "\\.org$"))))))))
   

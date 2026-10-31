@@ -20,7 +20,8 @@
     (sp/org-prob-insert-template title date full-title)
     (setq sp/org-prob-project-id (1+ sp/org-prob-project-id))
     (write-region
-     (format "(setq sp/org-prob-project-id %d)" sp/org-prob-project-id)
+      (format ";; -*- lexical-binding: t; -*-\n(setq sp/org-prob-project-id %d)\n"
+         sp/org-prob-project-id)
      nil
      "~/.emacs.d/.org-prob-id.el")))
 
