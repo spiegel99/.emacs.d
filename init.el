@@ -34,13 +34,6 @@
         (or (char-equal c ?<)
             (electric-pair-default-inhibit c))))
 
-(set-frame-font "Iosevka-15" nil t)
-;(set-frame-font "AcPlus IBM VGA 8x16 16" nil t)
-
-(use-package doom-themes
-  :ensure t
-  :init (load-theme 'doom-zenburn t))
-
 ;;send auto-save files to another directory
 (setq backup-directory-alist '(("." . "~/backup")))
 
@@ -64,6 +57,12 @@
 ;;;; +--------------------------------+
 ;;;; | appearance and ui improvements |
 ;;;; +--------------------------------+
+
+(set-frame-font "Pragmasevka-12" nil t)
+
+(use-package doom-themes
+  :ensure t
+  :init (load-theme 'doom-zenburn t))
 
 (use-package mood-line
   :config
