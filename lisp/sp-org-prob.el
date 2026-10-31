@@ -39,6 +39,7 @@
   (insert "#+end\n")
   (insert "\n* WBS")
   (org-set-property "PROJECT" project)
+  (org-set-property "ORDERED" "t")
   (setq wbsid (org-id-get-create))
   (goto-char (+ 3 (search-backward "id")))
   (insert wbsid)
