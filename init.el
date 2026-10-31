@@ -1,6 +1,7 @@
 ;;; -*- lexical-binding: t -*-
 ;;;  EMACS VERSION 30.1 AT LEAST RECOMMENDED
 
+
 ;;startup performance
 (setq gc-cons-threshold (* 50 1000 1000))
 (defun efs/display-startup-time ()
@@ -58,7 +59,7 @@
 ;;;; | appearance and ui improvements |
 ;;;; +--------------------------------+
 
-(set-frame-font "Pragmasevka-12" nil t)
+(set-frame-font "Pragmasevka-13" nil t)
 
 (use-package doom-themes
   :ensure t
