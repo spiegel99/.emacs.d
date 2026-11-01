@@ -59,7 +59,7 @@
 ;;;; | appearance and ui improvements |
 ;;;; +--------------------------------+
 
-(set-frame-font "Pragmasevka-13" nil t)
+(set-frame-font "Pragmasevka-12" nil t)
 
 (use-package doom-themes
   :ensure t
@@ -355,6 +355,10 @@
   liabilities:CEbank:visa  %\\1 EUR
   assets:CEbank:compte")
 
+	  ("b" "book")
+	  ("bb" "add book to booklist" entry (file "~/sync/orgfiles/books.org")
+           "* TOREAD %?")
+	  
 	  ("w" "watchlist")
 	  ("ww" "add movie/show to watchlist" entry (file "~/sync/orgfiles/watchlist.org")
            "* TOWATCH %?")
