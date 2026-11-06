@@ -242,7 +242,7 @@
   (setq org-adapt-indentation t)
   (setq org-enforce-todo-dependencies t)
   (setq org-agenda-dim-blocked-tasks t)
-  (setq org-agenda-files '("~/sync/orgfiles" "~/sync/projects/prob"))
+  (setq org-agenda-files '("~/sync/orgfiles" "~/sync/projects/wbs"))
   (setq org-agenda-inhibit-startup nil)
   (require 'org-habit)
    (add-to-list 'org-modules 'org-habit)
@@ -306,22 +306,22 @@
 	 ("w" "Workflow Status"
 	  ((tags "TODO=\"TODO\"+LEVEL=3"
 		      ((org-agenda-overriding-header "BACKLOG")
-		       (org-agenda-files (directory-files "~/sync/projects/prob" t "\\.org$"))))
+		       (org-agenda-files (directory-files "~/sync/projects/wbs" t "\\.org$"))))
 	   (tags "TODO=\"HOLD\"+LEVEL=3"
 		      ((org-agenda-overriding-header "ON HOLD")
-		       (org-agenda-files (directory-files "~/sync/projects/prob" t "\\.org$"))))
+		       (org-agenda-files (directory-files "~/sync/projects/wbs" t "\\.org$"))))
 	   (tags "TODO=\"PROG\"+LEVEL=3"
 		      ((org-agenda-overriding-header "IN PROGRESS")
-		       (org-agenda-files (directory-files "~/sync/projects/prob" t "\\.org$"))))
+		       (org-agenda-files (directory-files "~/sync/projects/wbs" t "\\.org$"))))
 	   (tags "TODO=\"DOC\"+LEVEL=3"
 		      ((org-agenda-overriding-header "WRITE DOCUMENTATION")
-		       (org-agenda-files (directory-files "~/sync/projects/prob" t "\\.org$"))))
+		       (org-agenda-files (directory-files "~/sync/projects/wbs" t "\\.org$"))))
 	   (tags "TODO=\"DONE\"+LEVEL=3"
 		      ((org-agenda-overriding-header "FINISHED")
-		       (org-agenda-files (directory-files "~/sync/projects/prob" t "\\.org$"))))
+		       (org-agenda-files (directory-files "~/sync/projects/wbs" t "\\.org$"))))
 	   (tags "TODO=\"CANC\"+LEVEL=3"
 		      ((org-agenda-overriding-header "CANCELLED")
-		       (org-agenda-files (directory-files "~/sync/projects/prob" t "\\.org$"))))))))
+		       (org-agenda-files (directory-files "~/sync/projects/wbs" t "\\.org$"))))))))
   
   ;; Define Org Capture templates
   (setq org-capture-templates

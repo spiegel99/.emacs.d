@@ -10,14 +10,14 @@
 	 (short-title (read-string "Short title: "))
          (date  (format-time-string "%Y-%m-%d"))
 	 (pid (format "%03d" sp/org-prob-project-id))
-	 (projectname (concat "P-2026-" pid "-" short-title))
+	 (projectname (concat "P-" (format-time-string "%y") "-" pid "-" short-title))
 	 (full-title (concat projectname " " title))
 	 (dir (concat "~/sync/projects/" projectname))
 	 (filename (concat pid "-" short-title ".org"))
-	 (filepath (concat "~/sync/projects/prob/" filename)))
+	 (filepath (concat "~/sync/projects/wbs/" filename)))
     (make-directory dir)
     (find-file filepath)
-    (sp/org-prob-insert-template title date full-title)
+    (sp/org-prob-insert-template full-title date)
     (setq sp/org-prob-project-id (1+ sp/org-prob-project-id))
     (write-region
       (format ";; -*- lexical-binding: t; -*-\n(setq sp/org-prob-project-id %d)\n"
@@ -25,21 +25,20 @@
      nil
      "~/.emacs.d/.org-prob-id.el")))
 
-(defun sp/org-prob-insert-template (title date project)
+(defun sp/org-prob-insert-template (title date)
   "Insert the org template for a new project"
-  (insert "#+TITLE: " title "\n")
-  (insert "#+DATE: "  date  "\n")
-  (insert "#+AUTHOR: " (user-full-name) "\n")
-  (insert "#+STARTUP: overview \n")
-  (insert "#+COLUMNS: %25ITEM(Task) %TODO(State) %5Effort(Estimated [min]){:} %Resources(Members) %SCHEDULED %DEADLINE %CLOSED %CLOCKSUM(Clocked) %CLOCKSUM_T(Today)\n")
+  (insert "#+title: " title "\n")
+  (insert "#+date: "  date  "\n")
+  (insert "#+author: " (user-full-name) "\n")
+  (insert "#+startup: overview \n")
+  (insert "#+columns: %25ITEM(Task) %TODO(State) %5Effort(Estimated [min]){:} %Resources(Members) %SCHEDULED %DEADLINE %CLOSED %CLOCKSUM(Clocked) %CLOCKSUM_T(Today)\n")
   (insert "\n* COMMENT Reporting\n")
   (insert "#+begin: columnview :hlines 2 :skip-empty-rows \"t\" :indent \"t\" :id \n")
-  (insert "#+CAPTION: Overview\n")
+  (insert "#+caption: Overview\n")
   (insert "\n#+end\n")
   (insert "\n#+begin: clocktable :link t :formula %\n")
   (insert "#+end\n")
   (insert "\n* WBS")
-  (org-set-property "PROJECT" project)
   (org-set-property "ORDERED" "t")
   (setq wbsid (org-id-get-create))
   (goto-char (+ 3 (search-backward "id")))
@@ -52,27 +51,26 @@
   "Show active tasks in my projects with no clock activity in the last 10 days."
   (interactive)
   (org-ql-search
-    (directory-files "~/sync/projects/prob" t "\\.org\\'")
+    (directory-files "~/sync/projects/wbs" t "\\.org\\'")
     '(and (todo "PROG")
 	  (not (clocked :from -10)))
     :title "Stuck projects (no activity in 10 days)"))
 
-(defun sp/--prob-projects (file)
-  "Alist (PROJECT . FILE) pour chaque entrée ayant une propriété :PROJECT:."
+(defun sp/--prob-title (file)
+  "Return the #+TITLE of FILE, or its base name if it has none.
+Only the first 1 KB is read, the title is always at the top of the file."
   (with-temp-buffer
-    (insert-file-contents file)
-    (delay-mode-hooks (org-mode))
-    (delq nil
-          (org-map-entries
-           (lambda ()
-             (when-let* ((p (org-entry-get nil "PROJECT")))
-               (cons p file)))))))
+    (insert-file-contents file nil 0 1024)
+    (let ((case-fold-search t))
+      (if (re-search-forward "^#\\+title:[ \t]*\\(.+\\)$" nil t)
+          (string-trim (match-string 1))
+        (file-name-base file)))))
 
 (defun sp/org-prob-find-project ()
-  "Choisit un projet parmi les entrées :PROJECT: et ouvre son fichier."
+  "Choose a project by its #+TITLE and open its file."
   (interactive)
-  (let* ((files (directory-files "~/sync/projects/prob" t "\\.org\\'"))
-         (alist (mapcan #'sp/--prob-projects files))
+  (let* ((files (directory-files "~/sync/projects/wbs" t "\\.org\\'"))
+         (alist (mapcar (lambda (f) (cons (sp/--prob-title f) f)) files))
          (choice (completing-read "Project: " alist nil t)))
     (find-file (cdr (assoc choice alist)))))
     
