@@ -3,6 +3,10 @@
 
 (load-file "~/.emacs.d/.org-prob-id.el")
 
+(defun sp/org-prob-files ()
+  "Return the project files in `sp/org-prob-directory'."
+  (directory-files sp/org-prob-directory t "\\.org\\'"))
+
 (defun sp/org-prob-new-project ()
   "Create a new project"
   (interactive)
@@ -14,7 +18,7 @@
 	 (full-title (concat projectname " " title))
 	 (dir (concat "~/sync/projects/" projectname))
 	 (filename (concat pid "-" short-title ".org"))
-	 (filepath (concat "~/sync/projects/wbs/" filename)))
+	 (filepath (expand-file-name filename sp/org-prob-directory)))
     (make-directory dir)
     (find-file filepath)
     (sp/org-prob-insert-template full-title date)
@@ -40,9 +44,9 @@
   (insert "#+end\n")
   (insert "\n* WBS")
   (org-set-property "ORDERED" "t")
-  (setq wbsid (org-id-get-create))
-  (goto-char (+ 3 (search-backward "id")))
-  (insert wbsid)
+  (let ((wbsid (org-id-get-create)))
+    (goto-char (+ 3 (search-backward "id")))
+    (insert wbsid))
   (goto-char (search-forward ":END:"))
   (insert "\n** TODO ")
   (save-buffer))
@@ -51,7 +55,7 @@
   "Show active tasks in my projects with no clock activity in the last 10 days."
   (interactive)
   (org-ql-search
-    (directory-files "~/sync/projects/wbs" t "\\.org\\'")
+    (sp/org-prob-files)
     '(and (todo "PROG")
 	  (not (clocked :from -10)))
     :title "Stuck projects (no activity in 10 days)"))
@@ -69,8 +73,8 @@ Only the first 1 KB is read, the title is always at the top of the file."
 (defun sp/org-prob-find-project ()
   "Choose a project by its #+TITLE and open its file."
   (interactive)
-  (let* ((files (directory-files "~/sync/projects/wbs" t "\\.org\\'"))
-         (alist (mapcar (lambda (f) (cons (sp/--prob-title f) f)) files))
+  (let* ((alist (mapcar (lambda (f) (cons (sp/--prob-title f) f))
+                        (sp/org-prob-files)))
          (choice (completing-read "Project: " alist nil t)))
     (find-file (cdr (assoc choice alist)))))
     

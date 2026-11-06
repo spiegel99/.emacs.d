@@ -16,19 +16,21 @@
 (setq custom-file "~/.emacs.d/custom.el")
 (load custom-file)
 
+(defvar sp/org-prob-directory "~/sync/projects/wbs/"
+  "Directory holding my project breakdown files.")
+
 ;;;; +---------------------+
 ;;;; | basic configuration |
 ;;;; +---------------------+
 
 (setq inhibit-startup-message t)
-(tool-bar-mode -1)
-(menu-bar-mode -1)
-(scroll-bar-mode -1)
 
 (global-hl-line-mode 1)
 ;;replace yes or no by 'y' or 'n'
-(fset 'yes-or-no-p 'y-or-n-p)
+(setq use-short-answers t)
 (setq visible-bell t)
+;; keep minibuffer and corfu history between sessions
+(savehist-mode 1)
 (electric-pair-mode 1)
 (setq electric-pair-inhibit-predicate
       (lambda (c)
@@ -243,7 +245,7 @@
   (setq org-adapt-indentation t)
   (setq org-enforce-todo-dependencies t)
   (setq org-agenda-dim-blocked-tasks t)
-  (setq org-agenda-files '("~/sync/orgfiles" "~/sync/projects/wbs"))
+  (setq org-agenda-files (list "~/sync/orgfiles" sp/org-prob-directory))
   (setq org-agenda-inhibit-startup nil)
   (require 'org-habit)
    (add-to-list 'org-modules 'org-habit)
@@ -306,22 +308,22 @@
 	 ("w" "Workflow Status"
 	  ((tags "TODO=\"TODO\"+LEVEL=3"
 		      ((org-agenda-overriding-header "BACKLOG")
-		       (org-agenda-files (directory-files "~/sync/projects/wbs" t "\\.org$"))))
+		       (org-agenda-files (sp/org-prob-files))))
 	   (tags "TODO=\"HOLD\"+LEVEL=3"
 		      ((org-agenda-overriding-header "ON HOLD")
-		       (org-agenda-files (directory-files "~/sync/projects/wbs" t "\\.org$"))))
+		       (org-agenda-files (sp/org-prob-files))))
 	   (tags "TODO=\"PROG\"+LEVEL=3"
 		      ((org-agenda-overriding-header "IN PROGRESS")
-		       (org-agenda-files (directory-files "~/sync/projects/wbs" t "\\.org$"))))
+		       (org-agenda-files (sp/org-prob-files))))
 	   (tags "TODO=\"DOC\"+LEVEL=3"
 		      ((org-agenda-overriding-header "WRITE DOCUMENTATION")
-		       (org-agenda-files (directory-files "~/sync/projects/wbs" t "\\.org$"))))
+		       (org-agenda-files (sp/org-prob-files))))
 	   (tags "TODO=\"DONE\"+LEVEL=3"
 		      ((org-agenda-overriding-header "FINISHED")
-		       (org-agenda-files (directory-files "~/sync/projects/wbs" t "\\.org$"))))
+		       (org-agenda-files (sp/org-prob-files))))
 	   (tags "TODO=\"CANC\"+LEVEL=3"
 		      ((org-agenda-overriding-header "CANCELLED")
-		       (org-agenda-files (directory-files "~/sync/projects/wbs" t "\\.org$"))))))))
+		       (org-agenda-files (sp/org-prob-files))))))))
   
   ;; Define Org Capture templates
   (setq org-capture-templates

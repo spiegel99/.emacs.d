@@ -25,6 +25,7 @@ org-roam.db
 custom.el
 .org-id-locations
 recentf
+history
 tramp
 .cache/
 url/
