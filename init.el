@@ -349,7 +349,7 @@
 	  
 	  ("l" "ledger entry")	
 	  ("ld" "debit differe" plain
-	   (file "~/sync/ledger/2026/journal.dat")
+	   (file "~/sync/ledger/journal.dat")
  "%(org-read-date) * depenses (to be deleted)
   expenses:general  %^{Amount} EUR
   liabilities:CEbank:visa
