@@ -224,6 +224,7 @@
 ;;Common lisp
 ;;install sbcl
 (use-package sly
+  :defer t
   :hook (sly-mrepl-mode . (lambda () (display-line-numbers-mode -1))))
 
 ;;;; +-----+
@@ -272,7 +273,6 @@
   ;; Save Org buffers after refiling
   (advice-add 'org-refile :after 'org-save-all-org-buffers)
 
-  
   (setq org-tag-alist (quote (("@away" . ?a)
 			      ("@site" . ?s)
                             ("@office" . ?o)
@@ -471,11 +471,9 @@
 
 (global-set-key "\C-ca" 'org-agenda)
 (global-set-key "\C-cc" 'org-capture)
-(global-set-key "\C-cw" 'calendar)
 (global-set-key "\C-cv" 'visual-line-mode)
 (global-set-key "\C-cd" 'copy-from-above-command)
 (global-set-key "\C-cf" 'org-pomodoro)
-(global-set-key "\C-cy" 'poetry)
 (global-set-key "\C-cz" 'string-insert-rectangle)
 (global-set-key "\C-cr" 'counsel-projectile-rg)
 (global-set-key "\C-cu" 'org-update-all-dblocks)
