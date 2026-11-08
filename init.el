@@ -65,7 +65,7 @@
 
 (use-package doom-themes
   :ensure t
-  :init (load-theme 'doom-meltbus t))
+  :init (load-theme 'doom-spacegrey t))
 
 (use-package mood-line
   :config
