@@ -65,7 +65,7 @@
 
 (use-package doom-themes
   :ensure t
-  :init (load-theme 'doom-spacegrey t))
+  :init (load-theme 'doom-tomorrow-night t))
 
 (use-package mood-line
   :config
