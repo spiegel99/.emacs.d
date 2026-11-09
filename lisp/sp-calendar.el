@@ -50,4 +50,69 @@ Only highlights when called explicitly — does not affect the default calendar.
                 ((> m 12) (setq m (- m 12) y (1+ y))))
           (sp/calendar-highlight-by-tags agenda-file m y))))))
 
+;;;; past agenda entries
+
+(defvar sp/agenda-file (expand-file-name "~/sync/orgfiles/agenda.org")
+  "Org file holding calendar entries.")
+
+(defun sp/agenda--entry-last-date ()
+  "Return the latest active timestamp date (\"YYYY-MM-DD\") in the entry at point.
+Looks at the whole subtree, so ranges <a>--<b> count by their end date.
+Returns nil when the entry has no active timestamp."
+  (let ((end (save-excursion (org-end-of-subtree t t)))
+        last)
+    (save-excursion
+      (while (re-search-forward "<\\([0-9]\\{4\\}-[0-9]\\{2\\}-[0-9]\\{2\\}\\)[^>\n]*>" end t)
+        (let ((d (match-string-no-properties 1)))
+          (when (or (null last) (string> d last))
+            (setq last d)))))
+    last))
+
+(defun sp/agenda-past-entries (&optional erase file)
+  "Return top-level entries of FILE (default `sp/agenda-file') that are in the past.
+An entry is past when its latest active timestamp is before today; entries
+without a timestamp are ignored.  Each element is (HEADING DATE TEXT).
+With ERASE non-nil (interactively: prefix arg), also delete those entries
+from FILE and save it, after confirmation."
+  (interactive "P")
+  (require 'org)
+  (let* ((file (or file sp/agenda-file))
+         (today (format-time-string "%Y-%m-%d"))
+         found)
+    (with-current-buffer (find-file-noselect file)
+      (org-with-wide-buffer
+       (goto-char (point-min))
+       (while (re-search-forward "^\\* " nil t)
+         (beginning-of-line)
+         (let ((beg (point))
+               (date (sp/agenda--entry-last-date))
+               (end (save-excursion (org-end-of-subtree t t))))
+           (when (and date (string< date today))
+             (push (list (org-get-heading t t t t) date
+                         (buffer-substring-no-properties beg end)
+                         beg end)
+                   found))
+           (goto-char end))))
+      ;; FOUND is in reverse buffer order, which is what we want for deleting.
+      (when (and erase found
+                 (yes-or-no-p (format "Erase %d past entries from %s? "
+                                      (length found)
+                                      (file-name-nondirectory file))))
+        (dolist (e found)
+          (delete-region (nth 3 e) (nth 4 e)))
+        (save-buffer)))
+    (setq found (mapcar (lambda (e) (list (nth 0 e) (nth 1 e) (nth 2 e)))
+                        (nreverse found)))
+    (when (called-interactively-p 'any)
+      (with-current-buffer (get-buffer-create "*Past agenda entries*")
+        (let ((inhibit-read-only t))
+          (erase-buffer)
+          (dolist (e found) (insert (nth 2 e)))
+          (org-mode)
+          (view-mode 1)           ; read-only, `q' quits the window
+          (goto-char (point-min)))
+        (display-buffer (current-buffer)))
+      (message "%d past entries%s" (length found) (if erase " (erase requested)" "")))
+    found))
+
 (provide 'sp-calendar)
