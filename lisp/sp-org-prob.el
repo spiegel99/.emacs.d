@@ -77,9 +77,18 @@ Only the first 1 KB is read, the title is always at the top of the file."
                         (sp/org-prob-files)))
          (choice (completing-read "Project: " alist nil t)))
     (find-file (cdr (assoc choice alist)))))
-    
+
+;;for some reason, trailing whitespaces appear when I update dblocks in my wbs org files
+(defun sp/org-prob-update-reports ()
+  "Updates all dblocks and deletes trailing whitespaces"
+  (interactive)
+  (org-update-all-dblocks)
+  (delete-trailing-whitespace)
+  (message "Reports updated!"))
+
 (global-set-key (kbd "C-c b f") 'sp/org-prob-find-project)    
 (global-set-key (kbd "C-c b n") 'sp/org-prob-new-project)
 (global-set-key (kbd "C-c b s") 'sp/org-prob-stuck-projects)
+(global-set-key (kbd "C-c b u") 'sp/org-prob-update-reports)
 
 (provide 'sp-org-prob)

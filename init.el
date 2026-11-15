@@ -477,7 +477,6 @@
 (global-set-key "\C-cf" 'org-pomodoro)
 (global-set-key "\C-cz" 'string-insert-rectangle)
 (global-set-key "\C-cr" 'counsel-projectile-rg)
-(global-set-key "\C-cu" 'org-update-all-dblocks)
 (global-set-key "\C-co" 'sp/open-orgfiles)
 (global-set-key "\C-cs" 'sp/stickynote)
 (global-set-key "\C-cl" 'sp/open-ledger-dir)
