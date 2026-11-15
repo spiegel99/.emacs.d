@@ -1,7 +1,6 @@
 ;;; -*- lexical-binding: t -*-
 ;;;  EMACS VERSION 30.1 AT LEAST RECOMMENDED
 
-
 ;;startup performance
 (setq gc-cons-threshold (* 50 1000 1000))
 (defun efs/display-startup-time ()
@@ -373,8 +372,8 @@
 (use-package org-pomodoro
    :commands org-pomodoro
    :config
-   (setq org-pomodoro-audio-player "/usr/bin/aplay")  ;for linux
-;   (setq org-pomodoro-audio-player "/usr/bin/afplay") ;for macos
+;   (setq org-pomodoro-audio-player "/usr/bin/aplay")  ;for linux
+   (setq org-pomodoro-audio-player "/usr/bin/afplay") ;for macos
    (setq org-pomodoro-short-break-sound "~/.emacs.d/sounds/three_beeps.wav")
    (setq org-pomodoro-long-break-sound "~/.emacs.d/sounds/three_beeps.wav")
    (setq org-pomodoro-finished-sound "~/.emacs.d/sounds/zelda.wav"))
