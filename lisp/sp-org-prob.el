@@ -35,7 +35,7 @@
   (insert "#+date: "  date  "\n")
   (insert "#+author: " (user-full-name) "\n")
   (insert "#+startup: overview \n")
-  (insert "#+columns: %25ITEM(Task) %TODO(State) %5Effort(Estimated [min]){:} %Resources(Members) %SCHEDULED %DEADLINE %CLOSED %CLOCKSUM(Clocked) %CLOCKSUM_T(Today)\n")
+  (insert "#+columns: %25ITEM(Task) %TODO(State) %5Effort(Estimated){:} %Resources(Members) %SCHEDULED %DEADLINE %CLOSED %CLOCKSUM(Clocked) %CLOCKSUM_T(Today)\n")
   (insert "\n* COMMENT Reporting\n")
   (insert "#+begin: columnview :hlines 2 :skip-empty-rows \"t\" :indent \"t\" :id \n")
   (insert "#+caption: Overview\n")
