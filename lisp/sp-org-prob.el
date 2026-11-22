@@ -12,6 +12,7 @@
   (interactive)
   (let* ((title (read-string "Project title: "))
 	 (short-title (read-string "Short title: "))
+	 (resources (read-string "Resources (list all members separated by spaces): "))
          (date  (format-time-string "%Y-%m-%d"))
 	 (pid (format "%03d" sp/org-prob-project-id))
 	 (projectname (concat "P-" (format-time-string "%y") "-" pid "-" short-title))
@@ -21,7 +22,7 @@
 	 (filepath (expand-file-name filename sp/org-prob-directory)))
     (make-directory dir)
     (find-file filepath)
-    (sp/org-prob-insert-template full-title date)
+    (sp/org-prob-insert-template full-title date resources)
     (setq sp/org-prob-project-id (1+ sp/org-prob-project-id))
     (write-region
       (format ";; -*- lexical-binding: t; -*-\n(setq sp/org-prob-project-id %d)\n"
@@ -29,13 +30,13 @@
      nil
      "~/.emacs.d/.org-prob-id.el")))
 
-(defun sp/org-prob-insert-template (title date)
+(defun sp/org-prob-insert-template (title date resources)
   "Insert the org template for a new project"
   (insert "#+title: " title "\n")
   (insert "#+date: "  date  "\n")
   (insert "#+author: " (user-full-name) "\n")
   (insert "#+startup: overview \n")
-  (insert "#+columns: %25ITEM(Task) %TODO(State) %5Effort(Estimated){:} %Resources(Members) %SCHEDULED %DEADLINE %CLOSED %CLOCKSUM(Clocked) %CLOCKSUM_T(Today)\n")
+  (insert "#+columns: %25ITEM(Task) %TODO(State) %5EFFORT(Estimated){:} %RESOURCES(Members) %SCHEDULED %DEADLINE %CLOSED %CLOCKSUM(Clocked) %CLOCKSUM_T(Today)\n")
   (insert "\n* COMMENT Reporting\n")
   (insert "#+begin: columnview :hlines 2 :skip-empty-rows \"t\" :indent \"t\" :id \n")
   (insert "#+caption: Overview\n")
@@ -44,6 +45,7 @@
   (insert "#+end\n")
   (insert "\n* WBS")
   (org-set-property "ORDERED" "t")
+  (org-set-property "RESOURCES_ALL" resources)
   (let ((wbsid (org-id-get-create)))
     (goto-char (+ 3 (search-backward "id")))
     (insert wbsid))

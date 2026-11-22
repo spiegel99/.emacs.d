@@ -242,6 +242,7 @@
   (setq org-log-done 'time)
   (setq org-log-into-drawer t)
   (setq org-adapt-indentation t)
+  (setq org-agenda-overriding-columns-format "%40ITEM %RESOURCES %EFFORT{:}")
   (setq org-enforce-todo-dependencies t)
   (setq org-agenda-dim-blocked-tasks t)
   (setq org-agenda-files (list "~/sync/orgfiles" sp/org-prob-directory))
